@@ -9,7 +9,11 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False, unique=True)
+    is_coach = db.Column(db.Boolean, nullable=False, unique=True)
+    start_date = db.Column(db.Date, nullable=False)
+    last_promotion = db.Column(db.Date, nullable=False)
+    point_total = db.Column(db.Integer, nullable=False)
+    rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -31,3 +35,29 @@ class Car(db.Model):
     user = db.relationship("User")
 
 # TODO: Add your models below, remember to add a new migration and upgrade database
+
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    is_class = db.Column(db.Boolean, nullable=False)
+    points = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(255), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    capacity = db.Column(db.Integer, nullable=False)
+
+class UserEvent(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+
+class Rank(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    points_required = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(255), nullable=False)
+    is_child_rank = db.Column(db.Boolean, nullable=False)
+
+class Promotion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.Date, nullable=False)
+    rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'))

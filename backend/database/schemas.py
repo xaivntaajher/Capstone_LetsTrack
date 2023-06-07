@@ -14,9 +14,8 @@ class RegisterSchema(ma.Schema):
     password = fields.String(required=True)
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
-    email = fields.String(required=True)
     class Meta:
-        fields = ("id", "username",  "password", "first_name", "last_name", "email")
+        fields = ("id", "username",  "password", "first_name", "last_name")
 
     @post_load
     def create_user(self, data, **kwargs):
@@ -30,9 +29,13 @@ class UserSchema(ma.Schema):
     username = fields.String(required=True)
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
-    email = fields.String(required=True)
+    is_coach = fields.Boolean(required=True)
+    start_date = fields.Date(required=True)
+    last_promotion = fields.Date(required=True)
+    point_total = fields.Integer(required=True)
+    rank_id = fields.Integer()
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email",)
+        fields = ("id", "username", "first_name", "last_name", "is_coach", "start_date", "last_promotion", "point_total", "rank_id")
 
 register_schema = RegisterSchema()
 user_schema = UserSchema()
@@ -59,3 +62,24 @@ cars_schema = CarSchema(many=True)
 
 
 # TODO: Add your schemas below
+
+class EventSchema(ma.Schema):
+
+    id = fields.Integer(primary_key=True)
+    is_class = fields.Boolean(required=True)
+    points = fields.Integer(required=True)
+    title = fields.String(required=True)
+    date = fields.Date(required=True)
+    capacity = fields.Integer(required=True)
+
+    class Meta:
+        fields = ("id", "is_class", "points", "title", "date", "capacity")
+
+class UserEventSchema(ma.Schema):
+ 
+    id = fields.Integer(primary_key=True)
+    user_id = fields.Integer(required=True)
+    event_id = fields.Integer(required=True)
+
+    class Meta:
+        fields = ("id", "is_class", "points", "title", "date", "capacity")
