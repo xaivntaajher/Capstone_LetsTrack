@@ -12,9 +12,9 @@ class EventTableResource(Resource):
         events = Event.query
         if type:
             events = events.filter_by(type=type)
+        
         events = events.all()
-        # user_id = get_jwt_identity()
-        # user_event = Event.query.filter_by(user_id=user_id)
+
         return events_schema.dump(events), 200
     
     @jwt_required()
@@ -34,8 +34,8 @@ class EventResource(Resource):
         user_id = get_jwt_identity()
         edit_event = Event.query.get_or_404(event_id)
 
-        if 'is_class' in request.json:
-            edit_event.is_class = request.json['is_class']
+        if 'type' in request.json:
+            edit_event.type = request.json['type']
         if 'points' in request.json:
             edit_event.points = request.json['points']
         if 'title' in request.json:
