@@ -9,11 +9,12 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    is_coach = db.Column(db.Boolean, nullable=False, unique=True)
-    start_date = db.Column(db.Date, nullable=False)
-    last_promotion = db.Column(db.Date, nullable=False)
-    point_total = db.Column(db.Integer, nullable=False)
+    is_coach = db.Column(db.Boolean)
+    start_date = db.Column(db.Date)
+    last_promotion = db.Column(db.Date)
+    point_total = db.Column(db.Integer)
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
+    rank = db.relationship("Rank")
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -38,26 +39,31 @@ class Car(db.Model):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    is_class = db.Column(db.Boolean, nullable=False)
     points = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String(255), nullable=False)
-    date = db.Column(db.Date, nullable=False)
-    capacity = db.Column(db.Integer, nullable=False)
+    type = db.Column(db.String(255), nullable=False)
+    date = db.Column(db.Date)
+    capacity = db.Column(db.Integer)
 
 class UserEvent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship("User")
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    event = db.relationship("Event")
 
 class Rank(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    points_required = db.Column(db.Integer, nullable=False)
+    points_required = db.Column(db.Integer)
     title = db.Column(db.String(255), nullable=False)
-    is_child_rank = db.Column(db.Boolean, nullable=False)
+    is_child_rank = db.Column(db.Boolean)
 
 class Promotion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    data = db.Column(db.Date, nullable=False)
+    date = db.Column(db.Date)
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
+    rank = db.relationship("Rank")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship("User")
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    event = db.relationship("Event")
