@@ -9,7 +9,7 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
-    is_coach = db.Column(db.Boolean)
+    is_coach = db.Column(db.Boolean, default=False)
     start_date = db.Column(db.Date)
     last_promotion = db.Column(db.Date)
     point_total = db.Column(db.Integer)

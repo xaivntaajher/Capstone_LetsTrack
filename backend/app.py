@@ -9,7 +9,7 @@ from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
 from resources.events import EventTableResource, EventResource
-from resources.dashboard import CoachDashboardResource
+from resources.coach import CoachResource, CoachReviewResource
 
 from dotenv import load_dotenv
 from os import environ
@@ -61,6 +61,9 @@ def create_routes():
     # TODO: Create files for your Resources in resources folder, add them here
     api.add_resource(EventTableResource, '/api/events')
     api.add_resource(EventResource, '/api/events/<int:event_id>')
-    api.add_resource(CoachDashboardResource, '/api/coach_dashboard')
+    api.add_resource(CoachResource, '/api/coach_review')
+    api.add_resource(CoachReviewResource, '/api/coach_review/<int:user_id>')
+
+    
     
     return api
