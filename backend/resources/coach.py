@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
 from database.models import db, User
@@ -53,6 +53,19 @@ class CoachReviewResource(Resource):
         db.session.commit()
 
         return {'message': 'User profile updated successfully'}, 200
+    
+    @jwt_required()
+    def delete(self, user_id):
+        coach_id = get_jwt_identity()
+        coach = User.query.get_or_404(coach_id)
+
+        if not coach.is_coach:
+            return {'message': 'Unauthorized access'}, 401
+        
+        delete_info = User.query.get_or_404(user_id)
+        db.session.delete(delete_info)
+        db.session.commit()
+        return '', 204
 
 
     

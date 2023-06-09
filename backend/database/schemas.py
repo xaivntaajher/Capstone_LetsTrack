@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Event, UserEvent, Rank, Promotion
+from database.models import User, Car, Event, Rank
 
 ma = Marshmallow()
 
@@ -18,6 +18,9 @@ class RankSchema(ma.Schema):
     def create_userevent(self, data, **kwargs):
         return Rank(**data)
     
+rank_schema = RankSchema()
+ranks_schema = RankSchema(many=True)
+    
 # Auth Schemas
 class RegisterSchema(ma.Schema):
     """
@@ -28,8 +31,9 @@ class RegisterSchema(ma.Schema):
     password = fields.String(required=True)
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
+    pin = fields.String(required=True)
     class Meta:
-        fields = ("id", "username",  "password", "first_name", "last_name")
+        fields = ("id", "username",  "password", "first_name", "last_name", "pin")
 
     @post_load
     def create_user(self, data, **kwargs):
@@ -44,13 +48,18 @@ class UserSchema(ma.Schema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
     is_coach = fields.Boolean()
+    pin = fields.String(required=True)
     start_date = fields.Date()
     last_promotion = fields.Date()
     point_total = fields.Integer()
     rank_id = fields.Integer()
-    rank = ma.Nested(RankSchema)
+    rank = ma.Nested(RankSchema, many=False)
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "is_coach", "start_date", "last_promotion", "point_total", "rank_id")
+        fields = ("id", "username", "first_name", "last_name", "is_coach", "start_date", "last_promotion", "point_total", "rank_id", "rank")
+
+    @post_load
+    def create_user(self, data, **kwargs):
+        return User(**data)
 
 register_schema = RegisterSchema()
 user_schema = UserSchema()
@@ -101,17 +110,15 @@ class UserEventSchema(ma.Schema):
  
     id = fields.Integer(primary_key=True)
     user_id = fields.Integer()
-    user = ma.Nested(UserSchema)
     event_id = fields.Integer()
-    event = ma.Nested(EventSchema)
-
-    class Meta:
-        fields = ("id", "user_id", "user", "event_id", "event")
 
     @post_load
     def create_userevent(self, data, **kwargs):
-        return UserEvent(**data)
-    
+        return User(**data)
+    class Meta:
+        fields = ("id", "user_id", "event_id",)
+        load_instance = True
+
 userevent_schema = UserEventSchema()
 userevents_schema = UserEventSchema(many=True)
 
@@ -121,18 +128,16 @@ class PromotionSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     date = fields.Date(required=True)
     rank_id = fields.Integer()
-    rank = ma.Nested(RankSchema)
     user_id = fields.Integer()
-    user = ma.Nested(UserSchema)
     coach_id = fields.Integer()
-    coach = ma.Nested(UserSchema)
-
-    class Meta:
-        fields = ("id", "date", "rank_id", "rank", "user_id", "user", "event_id", "event")
 
     @post_load
     def create_promotion(self, data, **kwargs):
-        return Promotion(**data)
+        return User(**data)
     
+    class Meta:
+        fields = ("id", "date", "rank_id", "user_id", "event_id", )
+        load_instance = True
+
 promotion_schema = PromotionSchema()
 promotions_schema = PromotionSchema(many=True)
