@@ -7,7 +7,7 @@ promotion = db.Table('promotion',
     db.Column('date', db.Date,),
     db.Column('rank_id', db.Integer, db.ForeignKey('rank.id'), primary_key=True),                     
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),                     
-    db.Column('event_id', db.Integer, db.ForeignKey('event.id'), primary_key=True)                     
+    db.Column('coach_id', db.Integer, db.ForeignKey('coach.id'), primary_key=True)                     
 )
 
 user_event = db.Table('user_event',

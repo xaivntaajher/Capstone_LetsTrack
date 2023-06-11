@@ -10,7 +10,8 @@ from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
 from resources.events import EventTableResource, EventResource
 from resources.coach import CoachResource, CoachReviewResource
-from resources.student import StudentResource, StudentReviewResource
+from resources.student import StudentResource, StudentCheckInResource, EventEnrollmentResource
+from resources.promotion import StudentPromotionResource, PromoteStudentResource
 
 from dotenv import load_dotenv
 from os import environ
@@ -65,7 +66,10 @@ def create_routes():
     api.add_resource(CoachResource, '/api/coach_review')
     api.add_resource(CoachReviewResource, '/api/coach_review/<int:user_id>')
     api.add_resource(StudentResource, '/api/student')
-    api.add_resource(StudentReviewResource, '/api/student/<int:event_id>')
+    api.add_resource(StudentCheckInResource, '/api/student/check-in')
+    api.add_resource(EventEnrollmentResource, '/api/events/enroll/<int:event_id>')
+    api.add_resource(PromoteStudentResource, '/api/promotions/<student_id>')
+    api.add_resource(StudentPromotionResource, '/api/promotions')
 
     
     

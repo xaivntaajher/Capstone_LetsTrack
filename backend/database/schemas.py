@@ -136,7 +136,7 @@ class PromotionSchema(ma.Schema):
         return User(**data)
     
     class Meta:
-        fields = ("id", "date", "rank_id", "user_id", "event_id", )
+        fields = ("id", "date", "rank_id", "user_id", "coach_id", )
         load_instance = True
 
 promotion_schema = PromotionSchema()
