@@ -11,6 +11,12 @@ class CoachResource(Resource):
         user_info = User.query.all()
         return users_schema.dump(user_info), 200
     
+class CoachStudentResource(Resource):
+    @jwt_required()
+    def get(self, user_id):
+        student = User.query.get_or_404(user_id)
+        return user_schema.dump(student)
+    
 class CoachReviewResource(Resource):
     @jwt_required()
     def put(self, user_id):

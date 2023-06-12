@@ -4,12 +4,12 @@ import datetime
 
 db = SQLAlchemy()
 
-promotion = db.Table('promotion',
-    db.Column('date', db.Date, default=datetime.datetime.now),
-    db.Column('rank_id', db.Integer, db.ForeignKey('rank.id'), primary_key=True),                     
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),                     
-    # db.Column('coach_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)                     
-)
+# promotion = db.Table('promotion',
+#     db.Column('date', db.Date, default=datetime.datetime.now),
+#     db.Column('rank_id', db.Integer, db.ForeignKey('rank.id'), primary_key=True),                     
+#     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),                     
+#     # db.Column('coach_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)                     
+# )
 
 user_event = db.Table('user_event',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True), 
@@ -31,8 +31,8 @@ class User(db.Model):
     rank = db.relationship("Rank")
 
     events = db.relationship('Event', secondary=user_event, backref=db.backref('users', lazy='dynamic'))
-    promotions = db.relationship('Rank', secondary=promotion, backref=db.backref('promoted_users', lazy='dynamic'))
-
+    # promotions = db.relationship('Rank', secondary=promotion, backref=db.backref('promoted_users', lazy='dynamic'))
+    promotions = db.relationship('Promotion')
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -76,14 +76,13 @@ class Rank(db.Model):
     title = db.Column(db.String(255), nullable=False)
     is_child_rank = db.Column(db.Boolean)
 
-# class Promotion(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     date = db.Column(db.Date)
-#     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
-#     rank = db.relationship("Rank")
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     user = db.relationship("User")
-#     coach_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-#     coach = db.relationship("Event")
+class Promotion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date)
+    rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
+    rank = db.relationship("Rank")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # coach_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    # coach = db.relationship("Event")
 
 

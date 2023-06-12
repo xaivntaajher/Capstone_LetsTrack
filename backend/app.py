@@ -9,7 +9,7 @@ from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
 from resources.events import EventTableResource, EventResource
-from resources.coach import CoachResource, CoachReviewResource
+from resources.coach import CoachResource, CoachReviewResource, CoachStudentResource
 from resources.student import StudentResource, StudentCheckInResource, StudentEnrollmentResource
 from resources.promotion import StudentPromotionResource, PromoteStudentResource
 
@@ -64,6 +64,7 @@ def create_routes():
     api.add_resource(EventTableResource, '/api/events')
     api.add_resource(EventResource, '/api/events/<int:event_id>')
     api.add_resource(CoachResource, '/api/coach_review')
+    api.add_resource(CoachStudentResource, '/api/coach_student/<int:user_id>')
     api.add_resource(CoachReviewResource, '/api/coach_review/<int:user_id>')
     api.add_resource(StudentResource, '/api/student')
     api.add_resource(StudentCheckInResource, '/api/student/check-in')

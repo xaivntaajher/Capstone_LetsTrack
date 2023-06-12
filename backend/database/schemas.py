@@ -23,8 +23,9 @@ ranks_schema = RankSchema(many=True)
 
 class PromotionSchema(ma.Schema):
     date = fields.Date()
-    rank_id = fields.Integer()
     user_id = fields.Integer()
+    rank_id = fields.Integer()
+    rank = ma.Nested(RankSchema)
 
 
     @post_load
@@ -32,7 +33,7 @@ class PromotionSchema(ma.Schema):
         return User(**data)
     
     class Meta:
-        fields = ("date", "rank_id", "user_id")
+        fields = ("date", "id","rank")
         load_instance = True
 
 promotion_schema = PromotionSchema()
@@ -73,7 +74,7 @@ class UserSchema(ma.Schema):
     rank = ma.Nested(RankSchema, many=False)
     events = ma.Nested("EventSchema", many=True, exclude=("users",))
     promotions = ma.Nested(PromotionSchema, many=True, load_instance=True)
-    
+
     class Meta:
         fields = ("id", "username", "first_name", "last_name", "is_coach", "start_date", "last_promotion", "point_total", "rank_id", "rank", "events", "promotions")
 
@@ -115,7 +116,7 @@ class EventSchema(ma.Schema):
     title = fields.String()
     date = fields.Date()
     capacity = fields.Integer()
-    users = ma.Nested(UserSchema, many=True)
+    users = ma.Nested(UserSchema, many=True, exclude=("events",))
 
     class Meta:
         fields = ("id", "type", "points", "title", "date", "capacity", "users")

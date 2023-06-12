@@ -8,15 +8,21 @@ from database.schemas import promotions_schema, promotion_schema
 class PromoteStudentResource(Resource):
     @jwt_required()
     def post(self):
-        user_id = request.json.get("user_id")
-        rank_id = request.json.get("rank_id")
-        user = User.query.get(user_id)
-        rank = Rank.query.get(rank_id)
-        user.rank_id = rank_id
-        user.promotions.append(rank)
+        coach_id = get_jwt_identity()
+        coach = User.query.get(coach_id)
+        if coach.is_coach:
 
-        db.session.commit()
-        return promotion_schema.dump(rank)
+            user_id = request.json.get("user_id")
+            rank_id = request.json.get("rank_id")
+            user = User.query.get(user_id)
+            rank = Rank.query.get(rank_id)
+            user.rank_id = rank_id
+            user.promotions.append(rank)
+
+            db.session.commit()
+            return promotion_schema.dump(rank)
+        
+        return {"message": ""}, 401
 
 class StudentPromotionResource(Resource):
     @jwt_required()
