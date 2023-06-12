@@ -7,7 +7,7 @@ promotion = db.Table('promotion',
     db.Column('date', db.Date,),
     db.Column('rank_id', db.Integer, db.ForeignKey('rank.id'), primary_key=True),                     
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),                     
-    db.Column('coach_id', db.Integer, db.ForeignKey('coach.id'), primary_key=True)                     
+    # db.Column('coach_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)                     
 )
 
 user_event = db.Table('user_event',
@@ -82,7 +82,7 @@ class Rank(db.Model):
 #     rank = db.relationship("Rank")
 #     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 #     user = db.relationship("User")
-#     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-#     event = db.relationship("Event")
+#     coach_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+#     coach = db.relationship("Event")
 
 

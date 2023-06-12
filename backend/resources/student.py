@@ -68,7 +68,6 @@ class EventEnrollmentResource(Resource):
     def post(self, event_id):
         user_id = get_jwt_identity()
         user = User.query.get_or_404(user_id)
-
         event = Event.query.get_or_404(event_id)
 
         # Check if the user is already enrolled in the event

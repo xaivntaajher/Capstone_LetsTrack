@@ -126,7 +126,7 @@ userevents_schema = UserEventSchema(many=True)
 class PromotionSchema(ma.Schema):
  
     id = fields.Integer(primary_key=True)
-    date = fields.Date(required=True)
+    date = fields.Date()
     rank_id = fields.Integer()
     user_id = fields.Integer()
     coach_id = fields.Integer()
