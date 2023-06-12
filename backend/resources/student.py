@@ -1,7 +1,7 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, User, Event, Rank
+from database.models import db, User, Event
 from database.schemas import events_schema
 
 class StudentResource(Resource):
@@ -37,29 +37,19 @@ class StudentCheckInResource(Resource):
         if user.pin != pin:
             return {'message': 'Invalid pin'}, 401
 
-        # Perform the check-in logic
+        if enrolled_event.type == 'class':
+            points_earned = enrolled_event.points
+        elif enrolled_event.type == 'tournament':
+            points_earned = enrolled_event.points
+        else:
+            return {'message': 'Invalid event type'}, 400
+
         # Update the user's point_total based on the event's points
-        user.point_total += enrolled_event.points
+        user.point_total += points_earned
+        db.session.commit()  # Commit the changes to the database
 
-        # Check if the user has accumulated enough points for a promotion
-        if user.point_total >= user.rank.points_required:
-            # Find the next rank based on the current rank's ID
-            next_rank = Rank.query.filter_by(id=user.rank_id + 1).first()
+        return {'message': 'Check-in successful', 'point_total': user.point_total}, 200
 
-            if next_rank:
-                # Update the user's rank and reset their point_total
-                user.rank = next_rank
-                user.point_total = 0
-
-                # Commit the changes to the database
-                db.session.commit()
-
-                return {
-                    'message': 'Check-in successful',
-                    'rank': next_rank.title  # Include the new rank in the response
-                }, 200
-
-        return {'message': 'Check-in successful'}, 200
 
 
 
