@@ -10,6 +10,7 @@ class EventTableResource(Resource):
     def get(self):
         type = request.args.get('type')
         events = Event.query
+        # Check params key value 'type', which can be either class or tournament
         if type:
             events = events.filter_by(type=type)
         

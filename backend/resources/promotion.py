@@ -7,11 +7,14 @@ from database.schemas import promotions_schema, promotion_schema
 
 class PromoteStudentResource(Resource):
     @jwt_required()
-    def post(self, rank_id):
-        user_id = get_jwt_identity()
+    def post(self):
+        user_id = request.json.get("user_id")
+        rank_id = request.json.get("rank_id")
         user = User.query.get(user_id)
         rank = Rank.query.get(rank_id)
-        user.promotion.append(rank)
+        user.rank_id = rank_id
+        user.promotions.append(rank)
+
         db.session.commit()
         return promotion_schema.dump(rank)
 

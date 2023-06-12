@@ -20,7 +20,24 @@ class RankSchema(ma.Schema):
     
 rank_schema = RankSchema()
 ranks_schema = RankSchema(many=True)
+
+class PromotionSchema(ma.Schema):
+    date = fields.Date()
+    rank_id = fields.Integer()
+    user_id = fields.Integer()
+
+
+    @post_load
+    def create_promotion(self, data, **kwargs):
+        return User(**data)
     
+    class Meta:
+        fields = ("date", "rank_id", "user_id")
+        load_instance = True
+
+promotion_schema = PromotionSchema()
+promotions_schema = PromotionSchema(many=True)
+
 # Auth Schemas
 class RegisterSchema(ma.Schema):
     """
@@ -54,8 +71,11 @@ class UserSchema(ma.Schema):
     point_total = fields.Integer()
     rank_id = fields.Integer()
     rank = ma.Nested(RankSchema, many=False)
+    events = ma.Nested("EventSchema", many=True, exclude=("users",))
+    promotions = ma.Nested(PromotionSchema, many=True, load_instance=True)
+    
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "is_coach", "start_date", "last_promotion", "point_total", "rank_id", "rank")
+        fields = ("id", "username", "first_name", "last_name", "is_coach", "start_date", "last_promotion", "point_total", "rank_id", "rank", "events", "promotions")
 
     @post_load
     def create_user(self, data, **kwargs):
@@ -95,9 +115,10 @@ class EventSchema(ma.Schema):
     title = fields.String()
     date = fields.Date()
     capacity = fields.Integer()
+    users = ma.Nested(UserSchema, many=True)
 
     class Meta:
-        fields = ("id", "type", "points", "title", "date", "capacity")
+        fields = ("id", "type", "points", "title", "date", "capacity", "users")
 
     @post_load
     def create_event(self, data, **kwargs):
@@ -123,21 +144,3 @@ userevent_schema = UserEventSchema()
 userevents_schema = UserEventSchema(many=True)
 
     
-class PromotionSchema(ma.Schema):
- 
-    id = fields.Integer(primary_key=True)
-    date = fields.Date()
-    rank_id = fields.Integer()
-    user_id = fields.Integer()
-    coach_id = fields.Integer()
-
-    @post_load
-    def create_promotion(self, data, **kwargs):
-        return User(**data)
-    
-    class Meta:
-        fields = ("id", "date", "rank_id", "user_id", "coach_id", )
-        load_instance = True
-
-promotion_schema = PromotionSchema()
-promotions_schema = PromotionSchema(many=True)

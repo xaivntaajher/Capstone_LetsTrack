@@ -14,7 +14,6 @@ class StudentResource(Resource):
 
         return {'available_classes': available_classes_data}, 200
 
-
 class StudentCheckInResource(Resource):
     @jwt_required()
     def post(self):
@@ -36,7 +35,7 @@ class StudentCheckInResource(Resource):
 
         if user.pin != pin:
             return {'message': 'Invalid pin'}, 401
-
+        # Checks event type and gives points according to type
         if enrolled_event.type == 'class':
             points_earned = enrolled_event.points
         elif enrolled_event.type == 'tournament':
@@ -44,16 +43,13 @@ class StudentCheckInResource(Resource):
         else:
             return {'message': 'Invalid event type'}, 400
 
-        # Update the user's point_total based on the event's points
+        # Update the user's point_total based on the event points
         user.point_total += points_earned
-        db.session.commit()  # Commit the changes to the database
+        db.session.commit()
 
         return {'message': 'Check-in successful', 'point_total': user.point_total}, 200
 
-
-
-
-class EventEnrollmentResource(Resource):
+class StudentEnrollmentResource(Resource):
     @jwt_required()
     def post(self, event_id):
         user_id = get_jwt_identity()
