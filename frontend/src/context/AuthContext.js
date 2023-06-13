@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       let finalData = {
         username: registerData.username,
         password: registerData.password,
-        email: registerData.email,
+        pin: registerData.pin,
         first_name: registerData.firstName,
         last_name: registerData.lastName,
       };

@@ -6,7 +6,7 @@ const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
   const defaultValues = {
     username: "",
-    email: "",
+    pin: "",
     password: "",
     firstName: "",
     lastName: "",
@@ -47,11 +47,11 @@ const RegisterPage = () => {
           />
         </label>
         <label>
-          Email:{" "}
+          Pin:{" "}
           <input
             type="text"
-            name="email"
-            value={formData.email}
+            name="pin"
+            value={formData.pin}
             onChange={handleInputChange}
           />
         </label>
