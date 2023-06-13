@@ -47,3 +47,10 @@ class EventResource(Resource):
             edit_event.capacity = request.json['capacity']
         db.session.commit()
         return event_schema.dump(edit_event), 200
+    
+class EventInformationResource(Resource):
+    @jwt_required()
+    #get event information by id
+    def get(self, event_id):
+        event = Event.query.get_or_404(event_id)
+        return event_schema.dump(event)
