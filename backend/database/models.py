@@ -78,10 +78,11 @@ class Rank(db.Model):
 
 class Promotion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date)
+    date = db.Column(db.Date, default=datetime.date.today)
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
     rank = db.relationship("Rank")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
     # coach_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     # coach = db.relationship("Event")
 

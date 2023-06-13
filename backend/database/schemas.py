@@ -1,6 +1,7 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Event, Rank
+from database.models import User, Car, Event, Rank, Promotion
+import datetime
 
 ma = Marshmallow()
 
@@ -22,7 +23,8 @@ rank_schema = RankSchema()
 ranks_schema = RankSchema(many=True)
 
 class PromotionSchema(ma.Schema):
-    date = fields.Date()
+
+    date = fields.Date(default=datetime.date.today)
     user_id = fields.Integer()
     rank_id = fields.Integer()
     rank = ma.Nested(RankSchema)
@@ -30,7 +32,7 @@ class PromotionSchema(ma.Schema):
 
     @post_load
     def create_promotion(self, data, **kwargs):
-        return User(**data)
+        return Promotion(**data)
     
     class Meta:
         fields = ("date", "id","rank")
