@@ -12,24 +12,25 @@ class PromoteStudentResource(Resource):
         coach = User.query.get(coach_id)
         if coach.is_coach:
 
-            user_id = request.json.get("user_id")
-            rank_id = request.json.get("rank_id")
-            user = User.query.get(user_id)
-            rank = Rank.query.get(rank_id)
-            user.rank_id = rank_id
+            form_data = request.get_json()
+            new_promotion = promotion_schema.load(form_data)
+            new_promotion.user_id = coach_id
+            db.session.add(new_promotion)
+            
+            # user_id = request.json.get("user_id")
+            # rank_id = request.json.get("rank_id")
+            # user = User.query.get(user_id)
+            # rank = Rank.query.get(rank_id)
+            # user.rank_id = rank_id
             # user.promotions.append(rank)
+            
 
             db.session.commit()
-            return promotion_schema.dump(rank)
+            return promotion_schema.dump(new_promotion)
         
         return {"message": ""}, 401
 
-# class StudentPromotionResource(Resource):
-#     @jwt_required()
-#     def get(self):
-#         promotions = db.session.query(User.promotion).all()
-#         promotion_data = promotions_schema.dump(promotions)
-#         return {'promotions': promotion_data}, 200
+
     
 
 

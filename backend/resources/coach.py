@@ -32,6 +32,8 @@ class CoachReviewResource(Resource):
             edit_user.last_promotion = request.json['last_promotion']
         if 'point_total' in request.json:
             edit_user.point_total = request.json['point_total']
+        if 'pin' in request.json:
+            edit_user.pin = request.json['pin']
         db.session.commit()
         return user_schema.dump(edit_user), 200
 

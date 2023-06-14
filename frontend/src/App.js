@@ -13,6 +13,8 @@ import Footer from "./components/Footer/Footer";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
+import EventListPage from "./pages/EventListPage/EventListPage";
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
         />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/events" element={<EventListPage />} />
       </Routes>
       <Footer />
     </div>
