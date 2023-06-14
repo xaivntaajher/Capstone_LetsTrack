@@ -24,8 +24,8 @@ ranks_schema = RankSchema(many=True)
 
 class PromotionSchema(ma.Schema):
     date = fields.Date()
-    user_id = fields.Str()
-    rank_id = fields.Str()
+    user_id = fields.Integer()
+    rank_id = fields.Integer()
     rank = ma.Nested(RankSchema)
 
     @post_load
@@ -33,7 +33,7 @@ class PromotionSchema(ma.Schema):
         return Promotion(**data)
 
     class Meta:
-        fields = ("date", "id", "rank")
+        fields = ("date", "id", "user_id", "rank_id", "rank")
         load_instance = True
 
 promotion_schema = PromotionSchema()

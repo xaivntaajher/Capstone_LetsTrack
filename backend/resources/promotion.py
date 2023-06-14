@@ -11,24 +11,22 @@ class PromoteStudentResource(Resource):
         coach_id = get_jwt_identity()
         coach = User.query.get(coach_id)
         if coach.is_coach:
-
             form_data = request.get_json()
-            new_promotion = promotion_schema.load(form_data)
-            new_promotion.user_id = coach_id
-            db.session.add(new_promotion)
-            
-            # user_id = request.json.get("user_id")
-            # rank_id = request.json.get("rank_id")
-            # user = User.query.get(user_id)
-            # rank = Rank.query.get(rank_id)
-            # user.rank_id = rank_id
-            # user.promotions.append(rank)
-            
 
+            
+            id = form_data.get("id")  
+            date = form_data.get("date")  
+            user_id = form_data.get("user_id")  
+            rank_id = form_data.get("rank_id")  
+
+            new_promotion = Promotion(id=id, date=date, user_id=user_id, rank_id=rank_id)
+            db.session.add(new_promotion)
             db.session.commit()
+
             return promotion_schema.dump(new_promotion)
-        
+
         return {"message": ""}, 401
+
 
 
     

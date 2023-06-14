@@ -83,7 +83,6 @@ class Promotion(db.Model):
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
     rank = db.relationship("Rank")
 
-    # coach_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-    # coach = db.relationship("Event")
+
 
 
