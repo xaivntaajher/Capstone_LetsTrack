@@ -9,9 +9,6 @@ const EventForm = (props) => {
     const [points, setPoints] = useState('')
     const [capacity, setCapacity] = useState('')
     
-const newEvent = () => {
-    setToggle(!toggle);
-};
 
 const handlesubmit = async(e) => {
     e.preventDefault()

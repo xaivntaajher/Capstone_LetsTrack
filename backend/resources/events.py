@@ -20,6 +20,9 @@ class EventTableResource(Resource):
     
     @jwt_required()
     def post(self):
+        # if not user_id.is_coach:
+        #     return {'message': 'Unauthorized access'}, 401
+        
         user_id = get_jwt_identity()
         form_data = request.get_json()
         new_event = event_schema.load(form_data)
@@ -34,6 +37,9 @@ class EventResource(Resource):
     def put(self, event_id):
         user_id = get_jwt_identity()
         edit_event = Event.query.get_or_404(event_id)
+        
+        # if not user_id.is_coach:
+        #     return {'message': 'Unauthorized access'}, 401
 
         if 'type' in request.json:
             edit_event.type = request.json['type']
