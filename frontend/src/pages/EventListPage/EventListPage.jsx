@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import EventList from '../../components/EventList/EventList';
-import axios from 'axios';
+import EventForm from '../../components/EventForm/EventForm';
 
-const EventListPage = () => {
-  
+
+const EventListPage = (props) => {
+
+
 
   return ( 
     <div>
+      <EventForm />
       <h1>Events List</h1>
       <EventList  />
     </div>

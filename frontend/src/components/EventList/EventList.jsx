@@ -28,6 +28,7 @@ const EventList = (props) => {
           Authorization: 'Bearer ' + token
         }
       });
+
       getAllEvents();
       alert('Enrolled Successfully');
     } catch (error) {
@@ -39,7 +40,7 @@ const EventList = (props) => {
     getAllEvents();
   },[])
 
-  const handleDetail = (event) => {
+  const handleEdit = (event) => {
     console.log("View event details", event);
     setEvent(event);
   }
@@ -48,8 +49,6 @@ const EventList = (props) => {
     console.log("Enroll in event", event);
     postEnrollment(event.id); 
   }
-
-  const canViewAndEdit = user && user.is_coach; // Check if the user is a coach
 
   return (
     <div>
@@ -62,7 +61,6 @@ const EventList = (props) => {
             <th>Date</th>
             <th>Points</th>
             <th>Capacity</th>
-            {canViewAndEdit && <th>Actions</th>} {/* Render the Actions header only for coaches */}
           </tr>
         </thead>
         <tbody>
@@ -75,28 +73,19 @@ const EventList = (props) => {
                   <td>{event.date}</td>
                   <td>{event.points}</td>
                   <td>{event.capacity}</td>
-                  {canViewAndEdit ? (
-                    <td>
-                      <button type='button' onClick={() => handleDetail(event)}>Detail</button>
-                      <button type='button' onClick={() => handleEnroll(event)}>Enroll</button>
-                    </td>
-                  ) : (
-                    <td>
-                      <button type='button' onClick={() => handleEnroll(event)}>Enroll</button>
-                    </td>
-                  )}
+                  <td><button type='button' onClick={() => handleEdit(event)}>Edit Event</button></td>
+                  <td><button type='button' onClick={() => handleEnroll(event)}>Enroll</button></td>
                 </tr>
               )
             })}
         </tbody>
       </table>
+      <EditEvent token={token} {...event}>Edit Event</EditEvent>
     </div>
   );
 };
 
 export default EventList;
-
-
 
 
 

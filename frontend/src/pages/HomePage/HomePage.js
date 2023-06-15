@@ -38,6 +38,7 @@ const HomePage = () => {
           </p>
         ))}
         <Link to="/events">Events</Link>
+        <Link to="/students">Students</Link>
     </div>
   );
 };
