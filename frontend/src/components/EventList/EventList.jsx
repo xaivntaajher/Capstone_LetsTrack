@@ -20,7 +20,7 @@ const EventList = (props) => {
       console.log(error.response.data);
     } 
   }
-
+  
   const postEnrollment = async (event_id) => { 
     try {
       await axios.post(`http://127.0.0.1:5000/api/events/enroll/${event_id}`, null, {
@@ -28,7 +28,6 @@ const EventList = (props) => {
           Authorization: 'Bearer ' + token
         }
       });
-
       getAllEvents();
       alert('Enrolled Successfully');
     } catch (error) {

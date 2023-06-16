@@ -30,6 +30,7 @@ const EventForm = () => {
       setDate('');
       setPoints('');
       setCapacity('');
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

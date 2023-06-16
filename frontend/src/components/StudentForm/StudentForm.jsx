@@ -1,16 +1,10 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom"
-import StudentDetailPage from "../StudentDetailPage/StudentDetailPage";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import useAuth from '../../hooks/useAuth';
+import { useParams } from 'react-router-dom';
 
-import axios from "axios";
-
-const HomePage = () => {
-  // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
-  // The "token" value is the JWT token that you will send in the header of any request requiring authentication
-  //TODO: Add an AddCars Page to add a car for a logged in user's garage
-  const [student, setStudent] = useState(null);
+const StudentDetailPage = (props) => {
+    const [student, setStudent] = useState(null);
     const [user, token] = useAuth();
     const user_id = user.id;
     const [isRankExpand, setIsRankExpand] = useState(false);
@@ -48,9 +42,9 @@ const HomePage = () => {
     useEffect(() => {
         getStudent();
     }, [user_id, token]);
-  return (
-    <div className="container">
-      <div>
+
+    return (
+        <div>
             <div>
                 <h1>Student Details</h1>
             </div>
@@ -105,16 +99,7 @@ const HomePage = () => {
                 </div>
             )}
         </div>
-        <div>
-          <StudentDetailPage />
-        </div>
-        <Link to="/events">Events</Link>
-        <br></br>
-        <Link to="/students">Students</Link>
-        <br></br>
-        <Link to="/student/:user_id">Student</Link>
-    </div>
-  );
+    );
 };
 
-export default HomePage;
+export default StudentDetailPage;

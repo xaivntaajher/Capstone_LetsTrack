@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import EventListPage from "./pages/EventListPage/EventListPage";
 import StudentListPage from "./pages/StudentListPage/StudentListPage";
+import StudentDetailPage from "./pages/StudentDetailPage/StudentDetailPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -34,7 +35,8 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/events" element={<EventListPage />} />
-        <Route path="/students" element={<StudentListPage />} />
+        <Route exact path="/students" element={<StudentListPage />} />
+        <Route path="/student/:id" element={<StudentDetailPage />} />
       </Routes>
       {/* <Footer /> */}
     </div>
