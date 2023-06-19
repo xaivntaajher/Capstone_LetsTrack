@@ -3,6 +3,7 @@ import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { useParams } from 'react-router-dom';
 import RankProgressChart from '../../components/RankProgressChart/RankProgressChart';
+import { useNavigate } from 'react-router-dom';
 
 const StudentDetailPage = (props) => {
   const [student, setStudent] = useState(null);
@@ -11,6 +12,7 @@ const StudentDetailPage = (props) => {
   const [isPromotionsExpand, setIsPromotionsExpand] = useState(false);
   const [isEventsExpand, setIsEventsExpand] = useState(false);
   const [ranks, setRanks] = useState([]);
+  const navigate = useNavigate();
 
   const togglePromotions = () => {
     setIsPromotionsExpand(!isPromotionsExpand);
@@ -93,8 +95,15 @@ const StudentDetailPage = (props) => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // Go back to the previous page (StudentListPage)
+  };
+
   return (
     <div>
+      <div>
+        <button type="button" onClick={handleBack}>Close</button>
+      </div>
       <div>
         <h1>Student Details</h1>
       </div>
@@ -106,9 +115,9 @@ const StudentDetailPage = (props) => {
           <p>Last Promotion: {student.last_promotion}</p>
           <p>Current Rank: {getCurrentRankTitle()}</p>
           <p>
-            Is Coach: {student.is_coach ? 'Yes' : 'No'}{' '}
+            Is Coach: 
             <button onClick={handleToggleIsCoach}>
-              {student.is_coach ? 'Revoke Coach' : 'Grant Coach'}
+              {student.is_coach ? 'Yes' : 'No'}
             </button>
           </p>
           <p>Total Points: {student.point_total}</p>

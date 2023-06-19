@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import useAuth from "../../hooks/useAuth";
+import { Link } from 'react-router-dom'; // Import the Link component from react-router-dom
+import useAuth from '../../hooks/useAuth';
 import EditEvent from '../EditEvent/EditEvent';
+import { useNavigate } from 'react-router-dom';
 
 const EventList = (props) => {
   const [events, setEvents] = useState([]);
   const [event, setEvent] = useState(null);
   const [checkedInEvents, setCheckedInEvents] = useState([]);
   const [user, token] = useAuth();
-
+  const navigate = useNavigate();
   const [student, setStudent] = useState(null);
 
   const getStudent = async () => {
@@ -23,7 +25,7 @@ const EventList = (props) => {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     getStudent();
   }, [user.id, token]);
@@ -32,28 +34,28 @@ const EventList = (props) => {
     try {
       let response = await axios.get('http://127.0.0.1:5000/api/events', {
         headers: {
-          Authorization: 'Bearer ' + token
-        }
+          Authorization: 'Bearer ' + token,
+        },
       });
       setEvents(response.data);
     } catch (error) {
       console.log(error.response.data);
     }
-  }
+  };
 
   const postEnrollment = async (event_id) => {
     try {
       await axios.post(`http://127.0.0.1:5000/api/events/enroll/${event_id}`, null, {
         headers: {
-          Authorization: 'Bearer ' + token
-        }
+          Authorization: 'Bearer ' + token,
+        },
       });
       getAllEvents();
       alert('Enrolled Successfully');
     } catch (error) {
       console.log(error.response.data);
     }
-  }
+  };
 
   const postCheckIn = async (event_id, pin) => {
     // Validate pin length
@@ -61,26 +63,26 @@ const EventList = (props) => {
       alert('Pin must be 4 numbers');
       return;
     }
-  
+
     try {
       const response = await axios.post(
         `http://127.0.0.1:5000/api/events/check-in`,
         {
           event_id: event_id,
-          pin: pin
+          pin: pin,
         },
         {
           headers: {
-            Authorization: 'Bearer ' + token
-          }
+            Authorization: 'Bearer ' + token,
+          },
         }
       );
-  
+
       const { message, point_total, points_earned } = response.data;
       console.log(message); // Check-in successful message
       console.log(`Total Points: ${point_total}`); // Updated total points of the user
       console.log(`Points Earned: ${points_earned}`); // Points earned from the check-in
-  
+
       setCheckedInEvents([...checkedInEvents, event_id]);
       alert('Check-in Successful');
     } catch (error) {
@@ -91,20 +93,24 @@ const EventList = (props) => {
       }
     }
   };
-  
+
   useEffect(() => {
     getAllEvents();
-  }, [])
+  }, []);
 
   const handleEdit = (event) => {
-    console.log("View event details", event);
+    console.log('View event details', event);
     setEvent(event);
-  }
+  };
 
   const handleEnroll = (event) => {
-    console.log("Enroll in event", event);
+    console.log('Enroll in event', event);
     postEnrollment(event.id);
-  }
+  };
+
+  const handleDetail = (eventId) => {
+    navigate(`/events/${eventId}`);
+  };
 
   const handleCheckIn = async (event) => {
     if (checkedInEvents.includes(event.id)) {
@@ -119,20 +125,20 @@ const EventList = (props) => {
               `http://127.0.0.1:5000/api/student/check-in`,
               {
                 event_id: event.id,
-                pin: pin
+                pin: pin,
               },
               {
                 headers: {
-                  Authorization: 'Bearer ' + token
-                }
+                  Authorization: 'Bearer ' + token,
+                },
               }
             );
-  
+
             const { message, point_total, points_earned } = response.data;
             console.log(message); // Check-in successful message
             console.log(`Total Points: ${point_total}`); // Updated total points of the user
             console.log(`Points Earned: ${points_earned}`); // Points earned from the check-in
-  
+
             setCheckedInEvents([...checkedInEvents, event.id]);
             alert('Check-in Successful');
           } catch (error) {
@@ -142,7 +148,6 @@ const EventList = (props) => {
       }
     }
   };
-  
 
   return (
     <div>
@@ -167,28 +172,40 @@ const EventList = (props) => {
                 <td>{event.date}</td>
                 <td>{event.points}</td>
                 <td>{event.capacity}</td>
-                {student?.is_coach && <td><button type='button' onClick={() => handleEdit(event)}>Edit Event</button></td>}
-                <td><button type='button' onClick={() => handleEnroll(event)}>Enroll</button></td>
+                {student?.is_coach && (
+                  <td>
+                    <button type="button" onClick={() => handleEdit(event)}>
+                      Edit Event
+                    </button>
+                  </td>
+                )}
                 <td>
-                  <button
-                    type='button'
-                    onClick={() => handleCheckIn(event)}
-                    disabled={checkedInEvents.includes(event.id)}
-                  >
+                  <button type="button" onClick={() => handleEnroll(event)}>
+                    Enroll
+                  </button>
+                </td>
+                <td>
+                  <button type="button"onClick={() => handleCheckIn(event)} disabled={checkedInEvents.includes(event.id)}>
                     Check In
                   </button>
                 </td>
+                <td>
+                  <button type="button" onClick={() => handleDetail(event.id)}>
+                    Detail
+                  </button>
+                </td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </table>
-      {student?.is_coach && <EditEvent token={token} {...event}>Edit Event</EditEvent>}
+      {student?.is_coach && <EditEvent token={token} {...event} />}
     </div>
   );
 };
 
 export default EventList;
+
 
 
 

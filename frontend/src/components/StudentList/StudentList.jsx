@@ -4,12 +4,12 @@ import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import PromotionPage from '../../pages/PromotionPage/PromotionPage';
 
-const StudentList = (props) => {
+const StudentList = (props, getStudent) => {
   const [students, setStudents] = useState([]);
   const [user, token] = useAuth();
   const [ranks, setRanks] = useState([]);
   const navigate = useNavigate();
-
+  
   const getAllStudents = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:5000/api/coach_review', {
@@ -54,19 +54,21 @@ const StudentList = (props) => {
     }
   };
 
-  const handleDelete = async (studentId) => {
+  const handleDelete = async (key) => {
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/coach_review/${studentId}`, {
+      const response = await axios.delete(`http://127.0.0.1:5000/api/coach_review/${key}`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
       });
+      console.log(response); // Log the response object to inspect its structure
       getAllStudents(); // Refresh the student list after deletion
       alert('Student deleted successfully');
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.response);
     }
   };
+  
 
   return (
     <div>
@@ -76,9 +78,8 @@ const StudentList = (props) => {
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Total Points</th>
             <th>Details</th>
-            <th>Delete</th>
+            <th>Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -87,12 +88,11 @@ const StudentList = (props) => {
               <tr key={student.id}>
                 <td>{student.first_name}</td>
                 <td>{student.last_name}</td>
-                <td>{student.point_total}</td>
                 <td>
                   <button onClick={() => handleViewDetails(student.id)}>Details</button>
                 </td>
                 <td>
-                  <button onClick={() => handleDelete(student.id)}>Delete</button>
+                  <button onClick={() => handleDelete(student.id)}>Remove</button>
                 </td>
               </tr>
             );

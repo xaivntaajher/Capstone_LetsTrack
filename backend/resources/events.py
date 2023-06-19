@@ -59,4 +59,4 @@ class EventInformationResource(Resource):
     #get event information by id
     def get(self, event_id):
         event = Event.query.get_or_404(event_id)
-        return event_schema.dump(event)
+        return event_schema.dump(event), 201

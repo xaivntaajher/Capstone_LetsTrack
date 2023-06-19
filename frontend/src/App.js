@@ -10,6 +10,7 @@ import EventListPage from "./pages/EventListPage/EventListPage";
 import StudentListPage from "./pages/StudentListPage/StudentListPage";
 import StudentDetailPage from "./pages/StudentDetailPage/StudentDetailPage";
 import PromotionPage from "./pages/PromotionPage/PromotionPage";
+import EventDetailPage from "./pages/EventDetailPage/EventDetailPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -37,6 +38,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/events" element={<EventListPage />} />
+        <Route path="/events/:event_id" element={<EventDetailPage />} />
         <Route exact path="/students" element={<StudentListPage />} />
         <Route path="/student/:id" element={<StudentDetailPage />} />
         <Route path="/promotion" element={<PromotionPage />} />

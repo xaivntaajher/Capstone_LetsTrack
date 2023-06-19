@@ -57,17 +57,14 @@ class CoachReviewResource(Resource):
         return {'message': 'User profile updated successfully'}, 200
     
     @jwt_required()
-    def delete(self, user_id):
-        coach_id = get_jwt_identity()
-        coach = User.query.get_or_404(coach_id)
-
-        if not coach.is_coach:
-            return {'message': 'Unauthorized access'}, 401
-        
-        delete_info = User.query.get_or_404(user_id)
+    def delete(self, coach_id):
+        user_id = get_jwt_identity()
+        delete_info = User.query.get_or_404(coach_id)
         db.session.delete(delete_info)
         db.session.commit()
         return '', 204
+
+
 
 
     
