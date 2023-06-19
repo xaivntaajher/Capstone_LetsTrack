@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import the Link component from react-router-dom
 import useAuth from '../../hooks/useAuth';
 import EditEvent from '../EditEvent/EditEvent';
 import { useNavigate } from 'react-router-dom';
@@ -54,43 +53,6 @@ const EventList = (props) => {
       alert('Enrolled Successfully');
     } catch (error) {
       console.log(error.response.data);
-    }
-  };
-
-  const postCheckIn = async (event_id, pin) => {
-    // Validate pin length
-    if (pin.length !== 4) {
-      alert('Pin must be 4 numbers');
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        `http://127.0.0.1:5000/api/events/check-in`,
-        {
-          event_id: event_id,
-          pin: pin,
-        },
-        {
-          headers: {
-            Authorization: 'Bearer ' + token,
-          },
-        }
-      );
-
-      const { message, point_total, points_earned } = response.data;
-      console.log(message); // Check-in successful message
-      console.log(`Total Points: ${point_total}`); // Updated total points of the user
-      console.log(`Points Earned: ${points_earned}`); // Points earned from the check-in
-
-      setCheckedInEvents([...checkedInEvents, event_id]);
-      alert('Check-in Successful');
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        alert('Invalid PIN');
-      } else {
-        console.log(error.response.data);
-      }
     }
   };
 

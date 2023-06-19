@@ -1,0 +1,21 @@
+.detail-title {
+    display: flex;
+    justify-content: space-around;
+}
+
+.student-details {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 2em;
+}
+
+.event-student {
+    display: flex;
+    justify-content: center;
+}
+
+.chart {
+    display: flex;
+}
+

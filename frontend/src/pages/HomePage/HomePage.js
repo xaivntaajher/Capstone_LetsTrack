@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
-import StudentDetailPage from "../StudentDetailPage/StudentDetailPage";
+import { useNavigate } from "react-router-dom";
 import RankProgressChart from "../../components/RankProgressChart/RankProgressChart";
 import axios from "axios";
+import './HomePage.css';
 
 const HomePage = () => {
   const [student, setStudent] = useState(null);
@@ -56,11 +56,11 @@ const HomePage = () => {
 
   const getCurrentRankTitle = () => {
     if (student && student.promotions.length > 0) {
-      const lastPromotion = student.promotions[student.promotions.length - 1];
-      const rank = ranks.find((r) => r.id === lastPromotion.rank.id);
+      const last_promotion = student.promotions[student.promotions.length - 1];
+      const rank = ranks.find((r) => r.id === last_promotion.rank.id);
       if (rank) {
-        const promotionDate = new Date(lastPromotion.date);
-        const formattedDate = promotionDate.toLocaleDateString(); // Format the date as desired
+        const promotion_date = new Date(last_promotion.date);
+        const formattedDate = promotion_date.toLocaleDateString(); 
         return rank.title;
       }
     }
@@ -69,9 +69,9 @@ const HomePage = () => {
   
   const getLastPromotionDate = () => {
     if (student && student.promotions.length > 0) {
-      const lastPromotion = student.promotions[student.promotions.length - 1];
-      const promotionDate = new Date(lastPromotion.date);
-      return promotionDate.toLocaleDateString(); // Format the date as desired
+      const last_promotion = student.promotions[student.promotions.length - 1];
+      const promotion_date = new Date(last_promotion.date);
+      return promotion_date.toLocaleDateString(); 
     }
     return "";
   };
@@ -85,13 +85,17 @@ const HomePage = () => {
   };
 
   return (
-    <div className="container">
+    <div >
       <div>
-        <div>
+        <div className="detail-title">
           <h1>Student Details</h1>
         </div>
+        <div className="event-student">
+          <button onClick={handleEventsClick}>Events</button>
+          {student && student.is_coach && <button onClick={handleStudentsClick}>Students</button>}
+        </div>
         {student && (
-          <div>
+          <div className="student-details">
             <p>First Name: {student.first_name}</p>
             <p>Last Name: {student.last_name}</p>
             <p>Start Date: {student.start_date}</p>
@@ -128,16 +132,9 @@ const HomePage = () => {
           </div>
         )}
       </div>
-      {/* <div>
-        <StudentDetailPage />
-      </div> */}
-      <button onClick={handleEventsClick}>Events</button>
-      <br />
-      {student && student.is_coach && <button onClick={handleStudentsClick}>Students</button>}
-      <br />
-      {/* <Link to="/student/:user_id">Student</Link> */}
-      <br />
+      <div className="chart">
       {student && <RankProgressChart promotions={student.promotions} />}
+      </div>
     </div>
   );
 };

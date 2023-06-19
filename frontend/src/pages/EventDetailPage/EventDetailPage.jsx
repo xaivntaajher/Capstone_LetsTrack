@@ -40,22 +40,22 @@ const EventDetailPage = (props) => {
 
   const getCurrentRankTitle = (student) => {
     if (student && student.promotions.length > 0) {
-      const lastPromotion = student.promotions[student.promotions.length - 1];
-      return lastPromotion.rank.title;
+      const last_promotion = student.promotions[student.promotions.length - 1];
+      return last_promotion.rank.title;
     }
     return '';
   };
 
   const generateChartData = () => {
     const ranks = enrolledStudents.map((student) => getCurrentRankTitle(student));
-    const rankCounts = {};
+    const rank_counts = {};
     ranks.forEach((rank) => {
-      rankCounts[rank] = (rankCounts[rank] || 0) + 1;
+      rank_counts[rank] = (rank_counts[rank] || 0) + 1;
     });
 
     const chartData = [["Rank", "Count"]];
-    Object.keys(rankCounts).forEach((rank) => {
-      chartData.push([rank, rankCounts[rank]]);
+    Object.keys(rank_counts).forEach((rank) => {
+      chartData.push([rank, rank_counts[rank]]);
     });
 
     return chartData;
