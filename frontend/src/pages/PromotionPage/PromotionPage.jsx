@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
-const PromotionPage = (props) => {
+const PromotionPage = () => {
   const [user, token] = useAuth();
   const [promotionData, setPromotionData] = useState({
     id: null,
@@ -12,12 +13,12 @@ const PromotionPage = (props) => {
   });
   const [rankOptions, setRankOptions] = useState([]);
   const [userOptions, setUserOptions] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('props:', props);
     fetchRankOptions();
     fetchUserOptions();
-  }, [props]);
+  }, []);
 
   const fetchRankOptions = async () => {
     try {
@@ -75,6 +76,10 @@ const PromotionPage = (props) => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // Go back to the previous page (StudentListPage)
+  };
+
   return (
     <div>
       <h2>Promotion Page</h2>
@@ -126,6 +131,7 @@ const PromotionPage = (props) => {
         </label>
         <br />
         <button type="submit">Promote</button>
+        <button type="button" onClick={handleBack}>Close</button>
       </form>
     </div>
   );

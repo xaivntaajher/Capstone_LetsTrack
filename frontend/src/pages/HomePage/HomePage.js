@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StudentDetailPage from "../StudentDetailPage/StudentDetailPage";
 import RankProgressChart from "../../components/RankProgressChart/RankProgressChart";
 import axios from "axios";
@@ -9,15 +9,12 @@ const HomePage = () => {
   const [student, setStudent] = useState(null);
   const [user, token] = useAuth();
   const user_id = user.id;
-  const [isRankExpand, setIsRankExpand] = useState(false);
   const [isPromotionsExpand, setIsPromotionsExpand] = useState(false);
   const [isEventsExpand, setIsEventsExpand] = useState(false);
   const [ranks, setRanks] = useState([]);
+  const navigate = useNavigate();
 
-  const toggleRank = () => {
-    setIsRankExpand(!isRankExpand);
-  };
-
+  console.log(student)
   const togglePromotions = () => {
     setIsPromotionsExpand(!isPromotionsExpand);
   };
@@ -62,10 +59,29 @@ const HomePage = () => {
       const lastPromotion = student.promotions[student.promotions.length - 1];
       const rank = ranks.find((r) => r.id === lastPromotion.rank.id);
       if (rank) {
+        const promotionDate = new Date(lastPromotion.date);
+        const formattedDate = promotionDate.toLocaleDateString(); // Format the date as desired
         return rank.title;
       }
     }
     return "";
+  };
+  
+  const getLastPromotionDate = () => {
+    if (student && student.promotions.length > 0) {
+      const lastPromotion = student.promotions[student.promotions.length - 1];
+      const promotionDate = new Date(lastPromotion.date);
+      return promotionDate.toLocaleDateString(); // Format the date as desired
+    }
+    return "";
+  };
+  
+  const handleEventsClick = () => {
+    navigate('/events');
+  };
+
+  const handleStudentsClick = () => {
+    navigate('/students');
   };
 
   return (
@@ -79,20 +95,10 @@ const HomePage = () => {
             <p>First Name: {student.first_name}</p>
             <p>Last Name: {student.last_name}</p>
             <p>Start Date: {student.start_date}</p>
-            <p>Last Promotion: {student.last_promotion}</p>
+            <p>Last Promotion: {getLastPromotionDate()}</p>
             <p>Current Rank: {getCurrentRankTitle()}</p>
             <p>Is Coach: {student.is_coach ? "Yes" : "No"}</p>
             <p>Total Points: {student.point_total}</p>
-            <p>
-              <button onClick={toggleRank}>{isRankExpand ? "Collapse Rank" : "Expand Rank"}</button>
-            </p>
-            {isRankExpand && (
-              <ul>
-                <li>ID: {student.rank.id}</li>
-                <li>Title: {student.rank.title}</li>
-                <li>Points Required: {student.rank.points_required}</li>
-              </ul>
-            )}
             <p>
               <button onClick={togglePromotions}>{isPromotionsExpand ? "Collapse Promotions" : "Expand Promotions"}</button>
             </p>
@@ -122,12 +128,12 @@ const HomePage = () => {
           </div>
         )}
       </div>
-      <div>
+      {/* <div>
         <StudentDetailPage />
-      </div>
-      <Link to="/events">Events</Link>
+      </div> */}
+      <button onClick={handleEventsClick}>Events</button>
       <br />
-      {student && student.is_coach && <Link to="/students">Students</Link>}
+      {student && student.is_coach && <button onClick={handleStudentsClick}>Students</button>}
       <br />
       {/* <Link to="/student/:user_id">Student</Link> */}
       <br />

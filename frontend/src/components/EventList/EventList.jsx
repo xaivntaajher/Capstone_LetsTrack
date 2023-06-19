@@ -9,6 +9,25 @@ const EventList = (props) => {
   const [checkedInEvents, setCheckedInEvents] = useState([]);
   const [user, token] = useAuth();
 
+  const [student, setStudent] = useState(null);
+
+  const getStudent = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:5000/api/student/${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setStudent(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  useEffect(() => {
+    getStudent();
+  }, [user.id, token]);
+
   const getAllEvents = async () => {
     try {
       let response = await axios.get('http://127.0.0.1:5000/api/events', {
@@ -73,10 +92,6 @@ const EventList = (props) => {
     }
   };
   
-  
-  
-  
-
   useEffect(() => {
     getAllEvents();
   }, [])
@@ -152,7 +167,7 @@ const EventList = (props) => {
                 <td>{event.date}</td>
                 <td>{event.points}</td>
                 <td>{event.capacity}</td>
-                <td><button type='button' onClick={() => handleEdit(event)}>Edit Event</button></td>
+                {student?.is_coach && <td><button type='button' onClick={() => handleEdit(event)}>Edit Event</button></td>}
                 <td><button type='button' onClick={() => handleEnroll(event)}>Enroll</button></td>
                 <td>
                   <button
@@ -168,7 +183,7 @@ const EventList = (props) => {
           })}
         </tbody>
       </table>
-      <EditEvent token={token} {...event}>Edit Event</EditEvent>
+      {student?.is_coach && <EditEvent token={token} {...event}>Edit Event</EditEvent>}
     </div>
   );
 };

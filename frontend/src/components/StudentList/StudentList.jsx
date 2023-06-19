@@ -41,12 +41,9 @@ const StudentList = (props) => {
     getAllRanks();
   }, []);
 
-  const handlePromote = (studentId) => {
-    const student = students.find((student) => student.id === studentId);
-    if (student) {
-      // Redirect to PromotionPage with the selected student's data
-      navigate('/promotion', { state: { studentData: student } });
-    }
+  const handlePromote = () => {
+    // Redirect to PromotionPage
+    navigate('/promotion');
   };
 
   const handleViewDetails = (studentId) => {
@@ -57,8 +54,23 @@ const StudentList = (props) => {
     }
   };
 
+  const handleDelete = async (studentId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:5000/api/coach_review/${studentId}`, {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      getAllStudents(); // Refresh the student list after deletion
+      alert('Student deleted successfully');
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <div>
+      <button onClick={handlePromote}>Promote</button>
       <table>
         <thead>
           <tr>
@@ -66,7 +78,7 @@ const StudentList = (props) => {
             <th>Last Name</th>
             <th>Total Points</th>
             <th>Details</th>
-            <th>Promote</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -80,7 +92,7 @@ const StudentList = (props) => {
                   <button onClick={() => handleViewDetails(student.id)}>Details</button>
                 </td>
                 <td>
-                  <button onClick={() => handlePromote(student.id)}>Promote</button>
+                  <button onClick={() => handleDelete(student.id)}>Delete</button>
                 </td>
               </tr>
             );
@@ -92,9 +104,4 @@ const StudentList = (props) => {
 };
 
 export default StudentList;
-
-
-
-
-
 
