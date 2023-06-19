@@ -118,7 +118,7 @@ const EventList = (props) => {
     } else {
       const pin = window.prompt('Enter the PIN to check in:');
       if (pin) {
-        const confirmed = window.confirm(`Are you sure you want to check in to ${event.title}?`);
+        const confirmed = window.confirm(`Are you sure you want to check in to ${event.type}?`);
         if (confirmed) {
           try {
             const response = await axios.post(
@@ -133,21 +133,28 @@ const EventList = (props) => {
                 },
               }
             );
-
+  
             const { message, point_total, points_earned } = response.data;
             console.log(message); // Check-in successful message
             console.log(`Total Points: ${point_total}`); // Updated total points of the user
             console.log(`Points Earned: ${points_earned}`); // Points earned from the check-in
-
+  
             setCheckedInEvents([...checkedInEvents, event.id]);
             alert('Check-in Successful');
           } catch (error) {
-            console.log(error.response.data);
+            if (error.response && error.response.status === 401) {
+              alert('Invalid PIN');
+            } else {
+              console.log(error.response.data);
+            }
           }
         }
+      } else {
+        alert('Invalid PIN');
       }
     }
   };
+  
 
   return (
     <div>
@@ -190,9 +197,9 @@ const EventList = (props) => {
                   </button>
                 </td>
                 <td>
-                  <button type="button" onClick={() => handleDetail(event.id)}>
+                {student?.is_coach && <button type="button" onClick={() => handleDetail(event.id)}>
                     Detail
-                  </button>
+                  </button>}
                 </td>
               </tr>
             );
