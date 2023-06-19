@@ -3,6 +3,7 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import { Chart } from "react-google-charts";
 
 const EventDetailPage = (props) => {
   const [eventDetails, setEventDetails] = useState(null);
@@ -11,7 +12,6 @@ const EventDetailPage = (props) => {
   const { event_id } = useParams();
   const navigate = useNavigate();
 
-  console.log(enrolledStudents)
   useEffect(() => {
     fetchEventDetails();
   }, [event_id, token]);
@@ -38,35 +38,71 @@ const EventDetailPage = (props) => {
     navigate(-1); // Go back to the previous page
   };
 
+  const getCurrentRankTitle = (student) => {
+    if (student && student.promotions.length > 0) {
+      const lastPromotion = student.promotions[student.promotions.length - 1];
+      return lastPromotion.rank.title;
+    }
+    return '';
+  };
+
+  const generateChartData = () => {
+    const ranks = enrolledStudents.map((student) => getCurrentRankTitle(student));
+    const rankCounts = {};
+    ranks.forEach((rank) => {
+      rankCounts[rank] = (rankCounts[rank] || 0) + 1;
+    });
+
+    const chartData = [["Rank", "Count"]];
+    Object.keys(rankCounts).forEach((rank) => {
+      chartData.push([rank, rankCounts[rank]]);
+    });
+
+    return chartData;
+  };
+
   return (
     <div>
-        <button type="button" onClick={handleBack}>Close</button>
-        {eventDetails && (
-            <div>
-            <h1>Event Details</h1>
-            <p>Event ID: {eventDetails.id}</p>
-            <p>Event Type: {eventDetails.type}</p>
-            <p>Points: {eventDetails.points}</p>
-            <p>Title: {eventDetails.title}</p>
-            <p>Date: {eventDetails.date}</p>
-            <p>Capacity: {eventDetails.capacity}</p>
-            </div>
-        )}
-        <h2>Enrolled Students</h2>
-        {enrolledStudents.length > 0 ? (
-            <ul>
-            {enrolledStudents.map((student) => (
-                <li key={student.id}>Name: {student.first_name} {student.last_name}, Rank: {student.rank.title}</li>
-            ))}
-            </ul>
-        ) : (
-            <p>No students enrolled in this event.</p>
-        )}
+      <button type="button" onClick={handleBack}>Close</button>
+      {eventDetails && (
+        <div>
+          <h1>Event Details</h1>
+          <p>Event ID: {eventDetails.id}</p>
+          <p>Event Type: {eventDetails.type}</p>
+          <p>Points: {eventDetails.points}</p>
+          <p>Title: {eventDetails.title}</p>
+          <p>Date: {eventDetails.date}</p>
+          <p>Capacity: {eventDetails.capacity}</p>
+        </div>
+      )}
+      <h2>Enrolled Students</h2>
+      {enrolledStudents.length > 0 ? (
+        <ul>
+          {enrolledStudents.map((student) => (
+            <li key={student.id}>Name: {student.first_name} {student.last_name}, Rank: {getCurrentRankTitle(student)}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No students enrolled in this event.</p>
+      )}
+      <h2>Rank Distribution</h2>
+      {enrolledStudents.length > 0 ? (
+        <Chart
+          chartType="BarChart"
+          width="100%"
+          height="400px"
+          data={generateChartData()}
+        />
+      ) : (
+        <p>No students enrolled to display rank distribution.</p>
+      )}
     </div>
   );
 };
 
 export default EventDetailPage;
+
+
 
 
 
