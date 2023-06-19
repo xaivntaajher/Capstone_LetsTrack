@@ -96,7 +96,7 @@ const EventList = (props) => {
         if (confirmed) {
           try {
             const response = await axios.post(
-              `http://127.0.0.1:5000/api/events/check-in`,
+              `http://127.0.0.1:5000/api/student/check-in`,
               {
                 event_id: event.id,
                 pin: pin
