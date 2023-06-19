@@ -71,6 +71,28 @@ const StudentDetailPage = (props) => {
     return '';
   };
 
+  const handleToggleIsCoach = async () => {
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:5000/api/coach_review/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // Update the student object with the updated is_coach value
+      setStudent((prevStudent) => ({
+        ...prevStudent,
+        is_coach: !prevStudent.is_coach,
+      }));
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div>
@@ -83,7 +105,12 @@ const StudentDetailPage = (props) => {
           <p>Start Date: {student.start_date}</p>
           <p>Last Promotion: {student.last_promotion}</p>
           <p>Current Rank: {getCurrentRankTitle()}</p>
-          <p>Is Coach: {student.is_coach ? 'Yes' : 'No'}</p>
+          <p>
+            Is Coach: {student.is_coach ? 'Yes' : 'No'}{' '}
+            <button onClick={handleToggleIsCoach}>
+              {student.is_coach ? 'Revoke Coach' : 'Grant Coach'}
+            </button>
+          </p>
           <p>Total Points: {student.point_total}</p>
           <RankProgressChart promotions={student.promotions} />
           <p>
@@ -120,6 +147,8 @@ const StudentDetailPage = (props) => {
 };
 
 export default StudentDetailPage;
+
+
 
 
 
