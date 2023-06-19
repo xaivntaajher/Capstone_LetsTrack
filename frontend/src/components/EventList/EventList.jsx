@@ -65,9 +65,14 @@ const EventList = (props) => {
       setCheckedInEvents([...checkedInEvents, event_id]);
       alert('Check-in Successful');
     } catch (error) {
-      console.log(error.response.data);
+      if (error.response && error.response.status === 401) {
+        alert('Invalid PIN');
+      } else {
+        console.log(error.response.data);
+      }
     }
   };
+  
   
   
   

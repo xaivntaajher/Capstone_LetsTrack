@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PromotionPage from '../../pages/PromotionPage/PromotionPage';
 
 const StudentList = (props) => {
@@ -49,6 +49,14 @@ const StudentList = (props) => {
     }
   };
 
+  const handleViewDetails = (studentId) => {
+    const student = students.find((student) => student.id === studentId);
+    if (student) {
+      // Redirect to the details page with the selected student's data
+      navigate(`/student/${student.id}`);
+    }
+  };
+
   return (
     <div>
       <table>
@@ -56,6 +64,7 @@ const StudentList = (props) => {
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Total Points</th>
             <th>Details</th>
             <th>Promote</th>
           </tr>
@@ -66,8 +75,9 @@ const StudentList = (props) => {
               <tr key={student.id}>
                 <td>{student.first_name}</td>
                 <td>{student.last_name}</td>
+                <td>{student.point_total}</td>
                 <td>
-                  <Link to={`/student/${student.id}`}>View Details</Link>
+                  <button onClick={() => handleViewDetails(student.id)}>Details</button>
                 </td>
                 <td>
                   <button onClick={() => handlePromote(student.id)}>Promote</button>
@@ -82,6 +92,7 @@ const StudentList = (props) => {
 };
 
 export default StudentList;
+
 
 
 

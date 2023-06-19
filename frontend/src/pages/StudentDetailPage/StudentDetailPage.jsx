@@ -60,6 +60,17 @@ const StudentDetailPage = (props) => {
     getAllRanks();
   }, [id, token]);
 
+  const getCurrentRankTitle = () => {
+    if (student && student.promotions.length > 0) {
+      const lastPromotion = student.promotions[student.promotions.length - 1];
+      const rank = ranks.find((r) => r.id === lastPromotion.rank.id);
+      if (rank) {
+        return rank.title;
+      }
+    }
+    return '';
+  };
+
   return (
     <div>
       <div>
@@ -71,6 +82,7 @@ const StudentDetailPage = (props) => {
           <p>Last Name: {student.last_name}</p>
           <p>Start Date: {student.start_date}</p>
           <p>Last Promotion: {student.last_promotion}</p>
+          <p>Current Rank: {getCurrentRankTitle()}</p>
           <p>Is Coach: {student.is_coach ? 'Yes' : 'No'}</p>
           <p>Total Points: {student.point_total}</p>
           <RankProgressChart promotions={student.promotions} />
@@ -108,6 +120,7 @@ const StudentDetailPage = (props) => {
 };
 
 export default StudentDetailPage;
+
 
 
 

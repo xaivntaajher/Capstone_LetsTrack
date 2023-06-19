@@ -12,6 +12,7 @@ const HomePage = () => {
   const [isRankExpand, setIsRankExpand] = useState(false);
   const [isPromotionsExpand, setIsPromotionsExpand] = useState(false);
   const [isEventsExpand, setIsEventsExpand] = useState(false);
+  const [ranks, setRanks] = useState([]);
 
   const toggleRank = () => {
     setIsRankExpand(!isRankExpand);
@@ -38,9 +39,34 @@ const HomePage = () => {
     }
   };
 
+  const getRanks = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setRanks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getStudent();
+    getRanks();
   }, [user_id, token]);
+
+  const getCurrentRankTitle = () => {
+    if (student && student.promotions.length > 0) {
+      const lastPromotion = student.promotions[student.promotions.length - 1];
+      const rank = ranks.find((r) => r.id === lastPromotion.rank.id);
+      if (rank) {
+        return rank.title;
+      }
+    }
+    return "";
+  };
 
   return (
     <div className="container">
@@ -54,10 +80,11 @@ const HomePage = () => {
             <p>Last Name: {student.last_name}</p>
             <p>Start Date: {student.start_date}</p>
             <p>Last Promotion: {student.last_promotion}</p>
+            <p>Current Rank: {getCurrentRankTitle()}</p>
             <p>Is Coach: {student.is_coach ? "Yes" : "No"}</p>
             <p>Total Points: {student.point_total}</p>
             <p>
-              <button onClick={toggleRank}>{isRankExpand ? "Rank" : "Rank"}</button>
+              <button onClick={toggleRank}>{isRankExpand ? "Collapse Rank" : "Expand Rank"}</button>
             </p>
             {isRankExpand && (
               <ul>
@@ -67,7 +94,7 @@ const HomePage = () => {
               </ul>
             )}
             <p>
-              <button onClick={togglePromotions}>{isPromotionsExpand ? "Promotions" : "Promotions"}</button>
+              <button onClick={togglePromotions}>{isPromotionsExpand ? "Collapse Promotions" : "Expand Promotions"}</button>
             </p>
             {isPromotionsExpand && (
               <ul>
@@ -80,7 +107,7 @@ const HomePage = () => {
               </ul>
             )}
             <p>
-              <button onClick={toggleEvents}>{isEventsExpand ? "Events" : "Events"}</button>
+              <button onClick={toggleEvents}>{isEventsExpand ? "Collapse Events" : "Expand Events"}</button>
             </p>
             {isEventsExpand && (
               <ul>
@@ -110,4 +137,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
