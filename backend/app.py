@@ -11,7 +11,7 @@ from resources.cars import AllCarResource, UserCarResource
 from resources.events import EventTableResource, EventResource,EventInformationResource
 from resources.coach import CoachResource, CoachReviewResource
 from resources.student import StudentResource, StudentCheckInResource, StudentEnrollmentResource, StudentInformationResource
-from resources.promotion import PromoteStudentResource
+from resources.promotion import PromoteStudentResource, RankResource
 
 from dotenv import load_dotenv
 from os import environ
@@ -31,7 +31,7 @@ def create_app():
     """
     # Creates app instance
     app = Flask(__name__)
-
+    CORS(app)
     # Loads config properties from .env file
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET_KEY')
@@ -71,6 +71,7 @@ def create_routes():
     api.add_resource(StudentCheckInResource, '/api/student/check-in')
     api.add_resource(StudentEnrollmentResource, '/api/events/enroll/<int:event_id>')
     api.add_resource(PromoteStudentResource, '/api/promotions')
+    api.add_resource(RankResource, '/api/ranks')
 
     
     

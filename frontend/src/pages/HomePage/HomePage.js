@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom"
 import StudentDetailPage from "../StudentDetailPage/StudentDetailPage";
+import RankProgressChart from "../../components/RankProgressChart/RankProgressChart";
 
 import axios from "axios";
 
@@ -112,7 +113,11 @@ const HomePage = () => {
         <br></br>
         <Link to="/students">Students</Link>
         <br></br>
-        <Link to="/student/:user_id">Student</Link>
+        {/* <Link to="/student/:user_id">Student</Link> */}
+        <br></br>
+        {student && (
+        <RankProgressChart promotions={student.promotions} />
+      )}
     </div>
   );
 };

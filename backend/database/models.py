@@ -77,7 +77,7 @@ class Rank(db.Model):
     is_child_rank = db.Column(db.Boolean)
 
 class Promotion(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))

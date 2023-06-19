@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import PromotionPage from '../../pages/PromotionPage/PromotionPage';
 
 const StudentList = (props) => {
   const [students, setStudents] = useState([]);
   const [user, token] = useAuth();
-  const [expandPromotions, setExpandPromotions] = useState([]);
+  const [ranks, setRanks] = useState([]);
+  const navigate = useNavigate();
 
   const getAllStudents = async () => {
     try {
@@ -21,17 +23,29 @@ const StudentList = (props) => {
     }
   };
 
+  const getAllRanks = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      setRanks(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
   useEffect(() => {
     getAllStudents();
+    getAllRanks();
   }, []);
 
-  const togglePromotion = (student_id) => {
-    if (expandPromotions.includes(student_id)) {
-      // Promotion is already expanded, collapse it
-      setExpandPromotions(expandPromotions.filter((id) => id !== student_id));
-    } else {
-      // Promotion is not expanded, expand it
-      setExpandPromotions([...expandPromotions, student_id]);
+  const handlePromote = (studentId) => {
+    const student = students.find((student) => student.id === studentId);
+    if (student) {
+      // Redirect to PromotionPage with the selected student's data
+      navigate('/promotion', { state: { studentData: student } });
     }
   };
 
@@ -42,35 +56,21 @@ const StudentList = (props) => {
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Promotions</th>
             <th>Details</th>
+            <th>Promote</th>
           </tr>
         </thead>
         <tbody>
           {students.map((student) => {
-            const isExpanded = expandPromotions.includes(student.id);
             return (
               <tr key={student.id}>
                 <td>{student.first_name}</td>
                 <td>{student.last_name}</td>
                 <td>
-                  <button type="button" onClick={() => togglePromotion(student.id)}>
-                    {isExpanded ? 'Collapse' : 'Expand'}
-                  </button>
-                  {isExpanded && student.promotions && student.promotions.length > 0 && (
-                    <ul>
-                      {student.promotions.map((promotion) => (
-                        <li key={promotion.id}>
-                          <div>Date: {promotion.date}</div>
-                          <div>User ID: {promotion.user_id}</div>
-                          <div>Rank: {promotion.rank ? promotion.rank.title : '-'}</div>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <Link to={`/student/${student.id}`}>View Details</Link>
                 </td>
                 <td>
-                  <Link to={`/student/${student.id}`}>Details</Link>
+                  <button onClick={() => handlePromote(student.id)}>Promote</button>
                 </td>
               </tr>
             );
@@ -82,6 +82,8 @@ const StudentList = (props) => {
 };
 
 export default StudentList;
+
+
 
 
 

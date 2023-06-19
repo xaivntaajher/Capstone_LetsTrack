@@ -47,7 +47,9 @@ class StudentCheckInResource(Resource):
         user.point_total += points_earned
         db.session.commit()
 
-        return {'message': 'Check-in successful', 'point_total': user.point_total}, 200
+        return {'message': 'Check-in successful', 'point_total': user.point_total,
+        'points_earned': points_earned
+        }, 200
 
 class StudentEnrollmentResource(Resource):
     @jwt_required()

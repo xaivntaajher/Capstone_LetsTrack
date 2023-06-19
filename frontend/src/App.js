@@ -9,10 +9,12 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import EventListPage from "./pages/EventListPage/EventListPage";
 import StudentListPage from "./pages/StudentListPage/StudentListPage";
 import StudentDetailPage from "./pages/StudentDetailPage/StudentDetailPage";
+import PromotionPage from "./pages/PromotionPage/PromotionPage";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
+import StudentList from "./components/StudentList/StudentList";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
@@ -37,6 +39,8 @@ function App() {
         <Route path="/events" element={<EventListPage />} />
         <Route exact path="/students" element={<StudentListPage />} />
         <Route path="/student/:id" element={<StudentDetailPage />} />
+        <Route path="/promotion" element={<PromotionPage />} />
+        <Route path="/" element={<PrivateRoute><StudentList /></PrivateRoute>} />
       </Routes>
       {/* <Footer /> */}
     </div>

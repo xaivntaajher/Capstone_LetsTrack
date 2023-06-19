@@ -2,18 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { useParams } from 'react-router-dom';
+import RankProgressChart from '../../components/RankProgressChart/RankProgressChart';
 
 const StudentDetailPage = (props) => {
   const [student, setStudent] = useState(null);
   const [user, token] = useAuth();
   const { id } = useParams(); // Get the student ID from the URL parameter
-  const [isRankExpand, setIsRankExpand] = useState(false);
   const [isPromotionsExpand, setIsPromotionsExpand] = useState(false);
   const [isEventsExpand, setIsEventsExpand] = useState(false);
-
-  const toggleRank = () => {
-    setIsRankExpand(!isRankExpand);
-  };
+  const [ranks, setRanks] = useState([]);
 
   const togglePromotions = () => {
     setIsPromotionsExpand(!isPromotionsExpand);
@@ -25,20 +22,43 @@ const StudentDetailPage = (props) => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/student/${id}`, { // Fetch student details based on the selected student ID
+      const response = await axios.get(`http://127.0.0.1:5000/api/student/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setStudent(response.data);
+      const studentData = response.data;
+
+      // Check if there are promotions and initially expand the promotions section
+      const hasPromotions = studentData.promotions && studentData.promotions.length > 0;
+      setIsPromotionsExpand(hasPromotions);
+
+      // Find the last promotion date
+      const lastPromotionDate = studentData.promotions.length > 0 ? studentData.promotions[studentData.promotions.length - 1].date : null;
+
+      setStudent({ ...studentData, last_promotion: lastPromotionDate });
     } catch (error) {
       console.log(error);
     }
   };
 
+  const getAllRanks = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      setRanks(response.data);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
   useEffect(() => {
     getStudent();
-  }, [id, token]); // Fetch student details whenever the student ID or token changes
+    getAllRanks();
+  }, [id, token]);
 
   return (
     <div>
@@ -53,16 +73,7 @@ const StudentDetailPage = (props) => {
           <p>Last Promotion: {student.last_promotion}</p>
           <p>Is Coach: {student.is_coach ? 'Yes' : 'No'}</p>
           <p>Total Points: {student.point_total}</p>
-          <p>
-            <button onClick={toggleRank}>{isRankExpand ? 'Collapse Rank' : 'Expand Rank'}</button>
-          </p>
-          {isRankExpand && (
-            <ul>
-              <li>ID: {student.rank.id}</li>
-              <li>Title: {student.rank.title}</li>
-              <li>Points Required: {student.rank.points_required}</li>
-            </ul>
-          )}
+          <RankProgressChart promotions={student.promotions} />
           <p>
             <button onClick={togglePromotions}>
               {isPromotionsExpand ? 'Collapse Promotions' : 'Expand Promotions'}
@@ -97,5 +108,12 @@ const StudentDetailPage = (props) => {
 };
 
 export default StudentDetailPage;
+
+
+
+
+
+
+
 
 
