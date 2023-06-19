@@ -88,52 +88,59 @@ const HomePage = () => {
     <div >
       <div>
         <div className="detail-title">
-          <h1>Student Details</h1>
+          <h1>Welcome {user.username}!</h1>
         </div>
         <div className="event-student">
           <button onClick={handleEventsClick}>Events</button>
           {student && student.is_coach && <button onClick={handleStudentsClick}>Students</button>}
         </div>
-        {student && (
-          <div className="student-details">
-            <p>First Name: {student.first_name}</p>
-            <p>Last Name: {student.last_name}</p>
-            <p>Start Date: {student.start_date}</p>
-            <p>Last Promotion: {getLastPromotionDate()}</p>
-            <p>Current Rank: {getCurrentRankTitle()}</p>
-            <p>Is Coach: {student.is_coach ? "Yes" : "No"}</p>
-            <p>Total Points: {student.point_total}</p>
-            <p>
-              <button onClick={togglePromotions}>{isPromotionsExpand ? "Collapse Promotions" : "Expand Promotions"}</button>
-            </p>
-            {isPromotionsExpand && (
-              <ul>
-                {student.promotions.map((promotion) => (
-                  <li key={promotion.id}>
-                    Date: {promotion.date}, Rank ID: {promotion.rank.id}, Rank Title: {promotion.rank.title},
-                    Points Required: {promotion.rank.points_required}
-                  </li>
-                ))}
-              </ul>
+        <div className="container-1">
+          {student && (
+            <div className="student-details">
+              <p>First Name: {student.first_name}</p>
+              <p>Last Name: {student.last_name}</p>
+              <p>Start Date: {student.start_date}</p>
+              <p>Last Promotion: {getLastPromotionDate()}</p>
+              <p>Current Rank: {getCurrentRankTitle()}</p>
+              <p>Is Coach: {student.is_coach ? "Yes" : "No"}</p>
+              <p>Total Points: {student.point_total}</p>
+              <p>
+                <button onClick={togglePromotions}>{isPromotionsExpand ? "Collapse Promotions" : "Expand Promotions"}</button>
+              </p>
+              {isPromotionsExpand && (
+                <ul>
+                  {student.promotions.map((promotion) => (
+                    <li key={promotion.id}>
+                      Date: {promotion.date}, Rank ID: {promotion.rank.id}, Rank Title: {promotion.rank.title},
+                      Points Required: {promotion.rank.points_required}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <p>
+                <button onClick={toggleEvents}>{isEventsExpand ? "Collapse Events" : "Expand Events"}</button>
+              </p>
+              {isEventsExpand && (
+                <ul>
+                  {student.events.map((event) => (
+                    <li key={event.id}>
+                      Date: {event.date}, Title: {event.title}, Type: {event.type}, Points: {event.points}, Capacity:{" "}
+                      {event.capacity}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             )}
-            <p>
-              <button onClick={toggleEvents}>{isEventsExpand ? "Collapse Events" : "Expand Events"}</button>
-            </p>
-            {isEventsExpand && (
-              <ul>
-                {student.events.map((event) => (
-                  <li key={event.id}>
-                    Date: {event.date}, Title: {event.title}, Type: {event.type}, Points: {event.points}, Capacity:{" "}
-                    {event.capacity}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
-      </div>
-      <div className="chart">
-      {student && <RankProgressChart promotions={student.promotions} />}
+            <div className="chart">
+              <div className="detail-title">
+                <p>Rank Progress Chart</p>
+              </div>
+              <div>
+                {student && <RankProgressChart promotions={student.promotions} />}
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   );
