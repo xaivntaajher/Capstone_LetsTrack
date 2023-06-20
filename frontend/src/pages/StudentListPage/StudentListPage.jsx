@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import StudentList from '../../components/StudentList/StudentList'
-
+import StudentList from '../../components/StudentList/StudentList';
+import './StudentListPage.css';
 
 const StudentListPage = (props) => {
     
@@ -9,8 +9,7 @@ const StudentListPage = (props) => {
     
     
     return ( 
-        <div>
-            <h1>Student List</h1>
+        <div className='container-studentlist'>
             <StudentList />
         </div>
      );

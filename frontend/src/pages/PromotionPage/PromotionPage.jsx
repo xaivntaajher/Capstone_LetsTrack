@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import './PromotionPage.css'
 
 const PromotionPage = () => {
   const [user, token] = useAuth();
@@ -81,7 +82,7 @@ const PromotionPage = () => {
   };
 
   return (
-    <div>
+    <div className='text'>
       <h2>Promotion Page</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -130,8 +131,8 @@ const PromotionPage = () => {
           />
         </label>
         <br />
-        <button type="submit">Promote</button>
-        <button type="button" onClick={handleBack}>Close</button>
+        <button className='text-2' type="submit">Promote</button>
+        <button className='text-2' type="button" onClick={handleBack}>Close</button>
       </form>
     </div>
   );

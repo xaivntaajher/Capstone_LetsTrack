@@ -10,17 +10,17 @@
 
 html {
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: Impact, fantasy;
 }
 
 p {
-  font-size: 20px;
+  font-size: 25px;
 }
 
 button {
-  background-color: transparent;
-  border: 2px solid steelblue;
-  color: steelblue;
+  background-color: black;
+  border: 2px solid rgb(97, 97, 97);
+  color: white;
   font-size: 1rem;
   font-family: inherit;
   max-width: 100px;
@@ -29,8 +29,8 @@ button {
 
 button:hover {
   cursor: pointer;
-  color: white;
-  background-color: steelblue;
+  color: black;
+  background-color: white;
 }
 
 .container {
@@ -55,4 +55,8 @@ button:hover {
   margin: 5px;
   padding: 3px 7px;
   font-size: 17px;
+}
+
+.background {
+  background-color: rgb(211, 210, 210);
 }

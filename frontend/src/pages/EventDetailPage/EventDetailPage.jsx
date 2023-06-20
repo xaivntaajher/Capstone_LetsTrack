@@ -67,7 +67,6 @@ const EventDetailPage = (props) => {
       {eventDetails && (
         <div>
           <h1>Event Details</h1>
-          <p>Event ID: {eventDetails.id}</p>
           <p>Event Type: {eventDetails.type}</p>
           <p>Points: {eventDetails.points}</p>
           <p>Title: {eventDetails.title}</p>
@@ -85,7 +84,7 @@ const EventDetailPage = (props) => {
       ) : (
         <p>No students enrolled in this event.</p>
       )}
-      <h2>Rank Distribution</h2>
+      <h2>Ranks in Event</h2>
       {enrolledStudents.length > 0 ? (
         <Chart
           chartType="BarChart"

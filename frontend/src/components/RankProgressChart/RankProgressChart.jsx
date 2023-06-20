@@ -13,7 +13,7 @@ const RankProgressChart = ({ promotions }) => {
       chartType="LineChart"
       data={chartData}
       width="100%"
-      height="400px"
+      height="500px"
       legendToggle
     />
   );

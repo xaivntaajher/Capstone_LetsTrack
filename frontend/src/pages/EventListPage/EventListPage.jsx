@@ -3,6 +3,7 @@ import EventList from '../../components/EventList/EventList';
 import EventForm from '../../components/EventForm/EventForm';
 import useAuth from "../../hooks/useAuth";
 import axios from 'axios';
+import './EventListPage.css';
 
 const EventListPage = (props) => {
   const [user, token] = useAuth();
@@ -29,10 +30,12 @@ const EventListPage = (props) => {
   console.log("user:", student);
 
   return (
-    <div>
-      {student?.is_coach && <EventForm />}
-      <h1>Events List</h1>
-      <EventList />
+    <div className='container-eventlist'>
+      <div className='event'> 
+        {student?.is_coach && <EventForm />}
+        <h1 className='text-std-list'>Events List</h1>
+        <EventList />
+      </div>
     </div>
   );
 };

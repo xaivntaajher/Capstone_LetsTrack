@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
+import './EventForm.css'
 
 const EventForm = () => {
   const [type, setType] = useState('');
@@ -37,7 +38,7 @@ const EventForm = () => {
   };
 
   return (
-    <div>
+    <div className='text-e-list'>
       <form onSubmit={handleSubmit}>
         <h1>Add Event</h1>
         <label>Type</label>

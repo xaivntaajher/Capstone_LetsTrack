@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import EditEvent from '../EditEvent/EditEvent';
 import { useNavigate } from 'react-router-dom';
+import './EventList.css';
 
 const EventList = (props) => {
   const [events, setEvents] = useState([]);
@@ -119,8 +120,8 @@ const EventList = (props) => {
   
 
   return (
-    <div>
-      <table>
+    <div className='text-e-list'>
+      <table className='table'>
         <thead>
           <tr>
             <th>ID</th>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import './EditEvent.css'
 
 const EditEvent = ({ token, ...props }) => {
   const [type, setType] = useState(props.type);
@@ -32,7 +33,7 @@ const EditEvent = ({ token, ...props }) => {
 
 
   return (
-    <div>
+    <div className='text-e-list'>
       <section>
         <form onSubmit={handlesubmit}>
           <h1>Edit Event</h1>

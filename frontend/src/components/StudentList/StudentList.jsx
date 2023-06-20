@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import PromotionPage from '../../pages/PromotionPage/PromotionPage';
+import './StudentList.css';
 
 const StudentList = (props, getStudent) => {
   const [students, setStudents] = useState([]);
@@ -72,33 +72,38 @@ const StudentList = (props, getStudent) => {
 
   return (
     <div>
-      <button onClick={handlePromote}>Promote</button>
-      <table>
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Details</th>
-            <th>Remove</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => {
-            return (
-              <tr key={student.id}>
-                <td>{student.first_name}</td>
-                <td>{student.last_name}</td>
-                <td>
-                  <button onClick={() => handleViewDetails(student.id)}>Details</button>
-                </td>
-                <td>
-                  <button onClick={() => handleDelete(student.id)}>Remove</button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className='std-list'>
+        <h1 className='text-2'>Student List</h1>
+          <button className='btn btn:hover text-2' onClick={handlePromote}>Promote</button>
+          <div className='text'>
+            <table>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Details</th>
+                  {/* <th>Remove</th> */}
+                </tr>
+              </thead>
+              <tbody className='text-2'>
+                {students.map((student) => {
+                  return (
+                    <tr key={student.id}>
+                      <td>{student.first_name}</td>
+                      <td>{student.last_name}</td>
+                      <td>
+                        <button  onClick={() => handleViewDetails(student.id)}>Details</button>
+                      </td>
+                      {/* <td>
+                        <button className='btn btn:hover' onClick={() => handleDelete(student.id)}>Remove</button>
+                      </td> */}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+      </div>
     </div>
   );
 };

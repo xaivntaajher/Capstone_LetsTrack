@@ -94,7 +94,7 @@ const HomePage = () => {
           <button onClick={handleEventsClick}>Events</button>
           {student && student.is_coach && <button onClick={handleStudentsClick}>Students</button>}
         </div>
-        <div className="container-1">
+        <div className="container-3">
           {student && (
             <div className="student-details">
               <p>First Name: {student.first_name}</p>
@@ -108,35 +108,43 @@ const HomePage = () => {
                 <button onClick={togglePromotions}>{isPromotionsExpand ? "Collapse Promotions" : "Expand Promotions"}</button>
               </p>
               {isPromotionsExpand && (
-                <ul>
-                  {student.promotions.map((promotion) => (
-                    <li key={promotion.id}>
-                      Date: {promotion.date}, Rank ID: {promotion.rank.id}, Rank Title: {promotion.rank.title},
-                      Points Required: {promotion.rank.points_required}
-                    </li>
-                  ))}
-                </ul>
+                <div className="expand-content">
+                  <ul>
+                    {student.promotions.map((promotion) => (
+                      <li key={promotion.id}>
+                        Date: {promotion.date}<br />
+                        Title: {promotion.rank.title}<br />
+                        Type: {promotion.rank.type}<br />
+                        Points: {promotion.points}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
               <p>
                 <button onClick={toggleEvents}>{isEventsExpand ? "Collapse Events" : "Expand Events"}</button>
               </p>
               {isEventsExpand && (
-                <ul>
-                  {student.events.map((event) => (
-                    <li key={event.id}>
-                      Date: {event.date}, Title: {event.title}, Type: {event.type}, Points: {event.points}, Capacity:{" "}
-                      {event.capacity}
-                    </li>
-                  ))}
-                </ul>
+                <div className="expand-content">
+                  <ul>
+                    {student.events.map((event) => (
+                      <li key={event.id}>
+                        Date: {event.date}<br />
+                        Title: {event.title}<br />
+                        Type: {event.type}<br />
+                        Points: {event.points}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
             )}
             <div className="chart">
               <div className="detail-title">
-                <p>Rank Progress Chart</p>
+                <p className="ranktitle">Rank Progress Chart</p>
               </div>
-              <div>
+              <div className="graph">
                 {student && <RankProgressChart promotions={student.promotions} />}
               </div>
             </div>

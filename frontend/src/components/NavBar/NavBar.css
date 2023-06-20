@@ -12,8 +12,8 @@ li {
   background: rgb(223, 64, 64);
   box-shadow: 4px 2px 5px gray;
   color: white;
-  margin-bottom: 2rem;
   padding: 1.5rem 2rem;
+  font-family: "Poppins", sans-serif;
 }
 
 .navBar button {
@@ -33,3 +33,4 @@ li {
   cursor: pointer;
   font-size: 2rem;
 }
+

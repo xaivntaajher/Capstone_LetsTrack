@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-around;
     padding: 1em;
+    font-family: Arial Black;
 }
 
 .student-details {
@@ -19,14 +20,72 @@
 
 .chart {
     display: flex;
-    border: solid;
-    border-width: thin;
-    flex-wrap: wrap;
+    padding: 1em;
+    width: 80%;
+    height: 500px;
     align-content: space-around;
-    flex-direction: column;
-}
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
 
 .container-1 {
     display: flex;
     justify-content: space-evenly;
 }
+
+.graph {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    flex-direction: column;
+    width: 100%;
+    height: 400px;
+}
+
+
+.student-details {
+    max-width: 500px;
+    padding: 10px;
+    font-family: Impact, fantasy;
+  }
+  
+.student-details button {
+    font-size: 15px;
+    padding: 5px 10px;
+  }
+  
+.student-details ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+.student-details ul li {
+    margin-bottom: 5px;
+    font-size: 20px;
+  }
+  
+.student-details .expand-content {
+    max-width: 300px;
+    overflow-x: auto;
+    padding: 10px;
+  }
+  
+.container-3 {
+    background-image: url("C:/Users/dn_he/Desktop/devCodeCamp/Capstone/nolan-kent-finxP8-YEDc-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.ranktitle {
+    color: yellow;
+    -webkit-text-stroke: 0.5px black;
+  }
+  
+
+  

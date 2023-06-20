@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -11,17 +11,21 @@ const LoginPage = () => {
     defaultValues,
     loginUser
   );
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (isServerError) {
       reset();
     }
   }, [isServerError]);
 
+  const handleRegisterClick = () => {
+    navigate("/register"); // Use navigate to go to the "/register" route
+  };
+
   return (
-    <div className="container">
+    <div className="container-1" >
       <form className="form" onSubmit={handleSubmit}>
-        <label>
+        <label className="text">
           Username:{" "}
           <input
             type="text"
@@ -30,7 +34,7 @@ const LoginPage = () => {
             onChange={handleInputChange}
           />
         </label>
-        <label>
+        <label className="text">
           Password:{" "}
           <input
             type="password"
@@ -42,8 +46,10 @@ const LoginPage = () => {
         {isServerError ? (
           <p className="error">Login failed, incorrect credentials!</p>
         ) : null}
-        <Link to="/register">Click to register!</Link>
-        <button>Login!</button>
+      <div className="register-container">
+        <p className="register-link" onClick={handleRegisterClick}>Click to register</p>
+      </div>
+        <button className="login-button">Login!</button>
       </form>
     </div>
   );

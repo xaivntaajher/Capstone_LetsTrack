@@ -1,3 +1,33 @@
 .error {
   color: red;
 }
+
+.container-1 {
+  background-image: url("C:/Users/dn_he/Desktop/devCodeCamp/Capstone/timothy-eberly-7MRajrPiTqw-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  color:azure
+}
+
+.register-container {
+  background-color: white;
+  padding: 5px;
+}
+
+.register-link {
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.login-button {
+  background-color: gray;
+  color: white;
+}
