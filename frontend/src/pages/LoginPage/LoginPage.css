@@ -25,9 +25,13 @@
 .register-link {
   cursor: pointer;
   font-size: 12px;
+  color: white;
+  font-family: 'Your Custom Font', Impact, fantasy;
+  font-size: 20px;
 }
 
 .login-button {
   background-color: gray;
   color: white;
+  font-family: 'Your Custom Font', Impact, fantasy;
 }

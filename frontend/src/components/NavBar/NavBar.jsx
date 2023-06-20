@@ -22,7 +22,7 @@ const Navbar = () => {
             <b>Homepage</b>
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/events" style={{ textDecoration: "none", color: "white" }}>
             <b>Events</b>
           </Link>
@@ -33,7 +33,7 @@ const Navbar = () => {
               style={{ textDecoration: "none", color: "white" }}>
               <b>Students</b>
             </Link>
-          </li>
+          </li> */}
         <li>
           {user ? (
             <button onClick={logoutUser}>Logout</button>
