@@ -123,7 +123,7 @@ const EventList = (props) => {
     <div className='text-e-list'>
       <table className='table'>
         <thead>
-          <tr>
+          <tr className='text-table'>
             <th>ID</th>
             <th>Type</th>
             <th>Title</th>

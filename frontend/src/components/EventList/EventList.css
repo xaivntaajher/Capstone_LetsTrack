@@ -1,9 +1,16 @@
 .text-e-list {
     font-size: 20px;
-    color: white;
+    color: yellow;
     -webkit-text-stroke: 0.5px black;
+    font-family: 'Your Custom Font', Impact, fantasy;
  } 
 
 .e-table {
     display: flex;
+}
+
+.text-table {
+    font-size: 20px;
+    color: yellow;
+     font-family: 'Your Custom Font', Impact, fantasy;
 }

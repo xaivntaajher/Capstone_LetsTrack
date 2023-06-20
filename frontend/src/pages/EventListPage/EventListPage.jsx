@@ -32,9 +32,15 @@ const EventListPage = (props) => {
   return (
     <div className='container-eventlist'>
       <div className='event'> 
-        {student?.is_coach && <EventForm />}
-        <h1 className='text-std-list'>Events List</h1>
-        <EventList />
+        <div>
+          {student?.is_coach && <EventForm />}
+        </div>
+        <div>
+          <h1 className='text-std-list'>Events List</h1>
+        </div>
+        <div>
+          <EventList />
+        </div>
       </div>
     </div>
   );

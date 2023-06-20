@@ -74,7 +74,7 @@ const StudentList = (props, getStudent) => {
     <div>
       <div className='std-list'>
         <h1 className='text-2'>Student List</h1>
-          <button className='btn btn:hover text-2' onClick={handlePromote}>Promote</button>
+          <button className='text-2' onClick={handlePromote}>Promote</button>
           <div className='text'>
             <table>
               <thead>

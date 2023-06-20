@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Chart } from "react-google-charts";
+import './EventDetailPage.css';
 
 const EventDetailPage = (props) => {
   const [eventDetails, setEventDetails] = useState(null);
@@ -62,7 +63,7 @@ const EventDetailPage = (props) => {
   };
 
   return (
-    <div>
+    <div className="text-event-list">
       <button type="button" onClick={handleBack}>Close</button>
       {eventDetails && (
         <div>

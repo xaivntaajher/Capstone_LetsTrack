@@ -2,15 +2,17 @@
     font-size: 25px;
     color: black;
     -webkit-text-stroke: 0.5px white;
+    font-family: 'Your Custom Font', Impact, fantasy;
  } 
 
  .text-2 {
     color: white;
     -webkit-text-stroke: 0.5px black;
+    font-family: 'Your Custom Font', Impact, fantasy;
  }
 
 .std-list {
    display: flex;
    flex-direction: column;
-   margin-bottom: 200px;
+   margin-bottom: 00px;
 }
