@@ -26,7 +26,7 @@ class User(db.Model):
     pin = db.Column(db.String(4))
     start_date = db.Column(db.Date)
     last_promotion = db.Column(db.Date)
-    point_total = db.Column(db.Integer)
+    point_total = db.Column(db.Integer, default=0)
     rank_id = db.Column(db.Integer, db.ForeignKey('rank.id'))
     rank = db.relationship("Rank")
 

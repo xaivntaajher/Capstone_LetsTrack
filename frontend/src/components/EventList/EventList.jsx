@@ -124,7 +124,6 @@ const EventList = (props) => {
       <table className='table'>
         <thead>
           <tr className='text-table'>
-            <th>ID</th>
             <th>Type</th>
             <th>Title</th>
             <th>Date</th>
@@ -136,7 +135,6 @@ const EventList = (props) => {
           {events.map((event) => {
             return (
               <tr key={event.id}>
-                <td>{event.id}</td>
                 <td>{event.type}</td>
                 <td>{event.title}</td>
                 <td>{event.date}</td>

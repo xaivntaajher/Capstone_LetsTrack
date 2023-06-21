@@ -30,11 +30,17 @@ const HomePage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setStudent(response.data);
+      const updatedStudent = response.data;
+      if (updatedStudent.events.length > 0) {
+        const startDate = new Date(updatedStudent.events[0].date);
+        updatedStudent.start_date = startDate.toLocaleDateString();
+      }
+      setStudent(updatedStudent);
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   const getRanks = async () => {
     try {
@@ -99,7 +105,7 @@ const HomePage = () => {
             <div className="student-details">
               <p>First Name: {student.first_name}</p>
               <p>Last Name: {student.last_name}</p>
-              <p>Start Date: {student.start_date}</p>
+              <p>Start Date: {student && student.start_date ? student.start_date : "N/A"}</p>
               <p>Last Promotion: {getLastPromotionDate()}</p>
               <p>Current Rank: {getCurrentRankTitle()}</p>
               <p>Is Coach: {student.is_coach ? "Yes" : "No"}</p>
