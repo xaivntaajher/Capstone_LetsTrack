@@ -1,8 +1,7 @@
 version: '3.4'
 services:
   letstrack-database:
-    # build: ./database
-    # TODO Replace <docker hub username> with your Docker Hub account username and uncomment the line
+    build: ./database
     image: xaivntaaj/letstrack-database:latest
     ports:
       - 3306:3306
@@ -11,9 +10,9 @@ services:
     restart: always
     volumes:
       - db-data:/var/lib/mysql
+
   letstrack-backend:
-    # build: ./backend
-    # TODO Replace <docker hub username> with your Docker Hub account username and uncomment the line
+    build: ./backend
     image: xaivntaaj/letstrack-backend:latest
     ports:
       - 5000:5000
@@ -22,9 +21,9 @@ services:
       - "letstrack-database"
     command: >
       sh -c "flask db upgrade && gunicorn -b 0.0.0.0 app:app"
+      
   letstrack-frontend:
-    # build: ./frontend
-    # TODO Replace <docker hub username> with your Docker Hub account username and uncomment the line
+    build: ./frontend
     image: xaivntaaj/letstrack-frontend:latest
     ports:
       - 3000:3000
