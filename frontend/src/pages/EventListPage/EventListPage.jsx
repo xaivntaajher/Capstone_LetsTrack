@@ -30,7 +30,7 @@ const EventListPage = (props) => {
   console.log("user:", student);
 
   return (
-    <div className='container-eventlist'>
+    <div >
       <div className='event'> 
         <div>
           {student?.is_coach && <EventForm />}
