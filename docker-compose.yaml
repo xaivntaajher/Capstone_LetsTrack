@@ -15,7 +15,7 @@ services:
     build: ./backend
     image: xaivntaaj/letstrack-backend:1.0
     ports:
-      - 5000:5000
+      - 8000:8000
     restart: always
     depends_on:
       - "letstrack-database"

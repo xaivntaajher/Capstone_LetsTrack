@@ -23,6 +23,11 @@ import PrivateRoute from "./utils/PrivateRoute";
 
 
 function App() {
+
+  const IP_ADDRESS = "3.134.97.22"
+
+  const BASE_URL = `http://${IP_ADDRESS}:8000`
+
   return (
     <div className="background">
       <Navbar />
