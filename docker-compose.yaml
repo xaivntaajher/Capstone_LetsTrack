@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   letstrack-database:
-    build: ./database
+    # build: ./database
     image: xaivntaaj/letstrack-database:1.0
     ports:
       - 3306:3306
@@ -23,7 +23,7 @@ services:
       sh -c "flask db upgrade && gunicorn -b 0.0.0.0 app:app"
 
   letstrack-frontend:
-    build: ./frontend
+    # build: ./frontend
     image: xaivntaaj/letstrack-frontend:1.0
     ports:
       - 3000:3000
