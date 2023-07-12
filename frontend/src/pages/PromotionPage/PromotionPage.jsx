@@ -23,7 +23,7 @@ const PromotionPage = (props) => {
 
   const fetchRankOptions = async () => {
     try {
-      const response = await axios.get(`${props.BASE_URL}/api/ranks`, {
+      const response = await axios.get('http://3.134.97.22:8000/api/ranks', {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -36,7 +36,7 @@ const PromotionPage = (props) => {
 
   const fetchUserOptions = async () => {
     try {
-      const response = await axios.get(`${props.BASE_URL}/api/coach_review`, {
+      const response = await axios.get('http://3.134.97.22:8000/api/coach_review', {
         headers: {
           Authorization: 'Bearer ' + token,
         },

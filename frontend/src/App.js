@@ -42,12 +42,12 @@ function App() {
         />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/events" element={<EventListPage BASE_URL={BASE_URL}/>} />
-        <Route path="/events/:event_id" element={<EventDetailPage BASE_URL={BASE_URL}/>} />
-        <Route exact path="/students" element={<StudentListPage BASE_URL={BASE_URL}/>} />
-        <Route path="/student/:id" element={<StudentDetailPage BASE_URL={BASE_URL}/>} />
-        <Route path="/promotion" element={<PromotionPage BASE_URL={BASE_URL}/>} />
-        <Route path="/" element={<PrivateRoute><StudentList BASE_URL={BASE_URL}/></PrivateRoute>} />
+        <Route path="/events" element={<EventListPage />} />
+        <Route path="/events/:event_id" element={<EventDetailPage />} />
+        <Route exact path="/students" element={<StudentListPage />} />
+        <Route path="/student/:id" element={<StudentDetailPage />} />
+        <Route path="/promotion" element={<PromotionPage />} />
+        <Route path="/" element={<PrivateRoute><StudentList /></PrivateRoute>} />
       </Routes>
       {/* <Footer /> */}
     </div>

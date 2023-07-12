@@ -21,7 +21,7 @@ const EventForm = (props) => {
       capacity: capacity
     };
     try {
-      await axios.post(`${props.BASE_URL}/api/events`, newEvent, {
+      await axios.post('http://3.134.97.22:8000/api/events', newEvent, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

@@ -28,7 +28,7 @@ const StudentDetailPage = (props) => {
     console.log(token)
     const getStudent = async () => {
         try {
-            const response = await axios.get(`${props.BASE_URL}/api/student/${user_id}`, {
+            const response = await axios.get(`http://3.134.97.22:8000/api/student/${user_id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

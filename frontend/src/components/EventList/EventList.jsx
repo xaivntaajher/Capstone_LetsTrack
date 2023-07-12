@@ -15,7 +15,7 @@ const EventList = (props) => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`${props.BASE_URL}/api/student/${user.id}`, {
+      const response = await axios.get(`http://3.134.97.22:8000/api/student/${user.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +32,7 @@ const EventList = (props) => {
 
   const getAllEvents = async () => {
     try {
-      let response = await axios.get(`${props.BASE_URL}/api/events`, {
+      let response = await axios.get('http://3.134.97.22:8000/api/events', {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -45,7 +45,7 @@ const EventList = (props) => {
 
   const postEnrollment = async (event_id) => {
     try {
-      await axios.post(`${props.BASE_URL}/api/events/enroll/${event_id}`, null, {
+      await axios.post(`http://3.134.97.22:8000/api/events/enroll/${event_id}`, null, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -167,7 +167,7 @@ const EventList = (props) => {
           })}
         </tbody>
       </table>
-      {student?.is_coach && <EditEvent BASE_URL={props.BASE_URL} token={token} {...event} />}
+      {student?.is_coach && <EditEvent token={token} {...event} />}
     </div>
   );
 };

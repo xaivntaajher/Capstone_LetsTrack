@@ -25,7 +25,7 @@ const StudentDetailPage = (props) => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`${props.BASE_URL}/api/student/${id}`, {
+      const response = await axios.get(`http://3.134.97.22:8000/api/student/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ const StudentDetailPage = (props) => {
 
   const getAllRanks = async () => {
     try {
-      const response = await axios.get(`${props.BASE_URL}/api/ranks`, {
+      const response = await axios.get('http://3.134.97.22:8000/api/ranks', {
         headers: {
           Authorization: 'Bearer ' + token,
         },
