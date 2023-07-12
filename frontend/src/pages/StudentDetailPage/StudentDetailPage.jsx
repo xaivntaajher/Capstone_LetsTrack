@@ -25,7 +25,7 @@ const StudentDetailPage = (props) => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/student/${id}`, {
+      const response = await axios.get(`${props.BASE_URL}/api/student/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ const StudentDetailPage = (props) => {
 
   const getAllRanks = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+      const response = await axios.get(`${props.BASE_URL}/api/ranks`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -77,7 +77,7 @@ const StudentDetailPage = (props) => {
   const handleToggleIsCoach = async () => {
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5000/api/coach_review/${id}`,
+        `${props.BASE_URL}/api/coach_review/${id}`,
         {},
         {
           headers: {

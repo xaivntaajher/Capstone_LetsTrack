@@ -12,7 +12,7 @@ const StudentList = (props, getStudent) => {
   
   const getAllStudents = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/coach_review', {
+      const response = await axios.get(`${props.BASE_URL}/api/coach_review`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -25,7 +25,7 @@ const StudentList = (props, getStudent) => {
 
   const getAllRanks = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+      const response = await axios.get(`${props.BASE_URL}/api/ranks`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -56,7 +56,7 @@ const StudentList = (props, getStudent) => {
 
   const handleDelete = async (key) => {
     try {
-      const response = await axios.delete(`http://127.0.0.1:5000/api/coach_review/${key}`, {
+      const response = await axios.delete(`${props.BASE_URL}/api/coach_review/${key}`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

@@ -4,7 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import './PromotionPage.css'
 
-const PromotionPage = () => {
+const PromotionPage = (props) => {
   const [user, token] = useAuth();
   const [promotionData, setPromotionData] = useState({
     id: null,
@@ -23,7 +23,7 @@ const PromotionPage = () => {
 
   const fetchRankOptions = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+      const response = await axios.get(`${props.BASE_URL}/api/ranks`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -36,7 +36,7 @@ const PromotionPage = () => {
 
   const fetchUserOptions = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/coach_review', {
+      const response = await axios.get(`${props.BASE_URL}/api/coach_review`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -62,7 +62,7 @@ const PromotionPage = () => {
 
     try {
       const response = await axios.post(
-        'http://127.0.0.1:5000/api/promotions',
+        `${props.BASE_URL}/api/promotions`,
         promotionData,
         {
           headers: {

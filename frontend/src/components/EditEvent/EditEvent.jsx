@@ -19,7 +19,7 @@ const EditEvent = ({ token, ...props }) => {
       capacity: capacity,
     };
     try {
-      await axios.put(`http://127.0.0.1:5000/api/events/${props.id}`, updateEvent, {
+      await axios.put(`${props.BASE_URL}/api/events/${props.id}`, updateEvent, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

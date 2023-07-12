@@ -5,7 +5,7 @@ import RankProgressChart from "../../components/RankProgressChart/RankProgressCh
 import axios from "axios";
 import './HomePage.css';
 
-const HomePage = () => {
+const HomePage = (props) => {
   const [student, setStudent] = useState(null);
   const [user, token] = useAuth();
   const user_id = user.id;
@@ -25,7 +25,7 @@ const HomePage = () => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/student/${user_id}`, {
+      const response = await axios.get(`${props.BASE_URL}/api/student/${user_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,7 +44,7 @@ const HomePage = () => {
 
   const getRanks = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/ranks', {
+      const response = await axios.get(`${props.BASE_URL}/api/ranks`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -3,7 +3,7 @@ import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
 import './EventForm.css'
 
-const EventForm = () => {
+const EventForm = (props) => {
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
@@ -21,7 +21,7 @@ const EventForm = () => {
       capacity: capacity
     };
     try {
-      await axios.post('http://127.0.0.1:5000/api/events', newEvent, {
+      await axios.post(`${props.BASE_URL}/api/events`, newEvent, {
         headers: {
           Authorization: 'Bearer ' + token,
         },

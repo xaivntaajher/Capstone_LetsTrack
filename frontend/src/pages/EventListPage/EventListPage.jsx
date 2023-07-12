@@ -11,7 +11,7 @@ const EventListPage = (props) => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/student/${user.id}`, {
+      const response = await axios.get(`${props.BASE_URL}/api/student/${user.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,13 +33,13 @@ const EventListPage = (props) => {
     <div >
       <div className='event'> 
         <div>
-          {student?.is_coach && <EventForm />}
+          {student?.is_coach && <EventForm BASE_URL={props.BASE_URL}/>}
         </div>
         <div>
           <h1 className='text-std-list'>Events List</h1>
         </div>
         <div>
-          <EventList />
+          <EventList BASE_URL={props.BASE_URL}/>
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ const EventList = (props) => {
 
   const getStudent = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/api/student/${user.id}`, {
+      const response = await axios.get(`${props.BASE_URL}/api/student/${user.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +32,7 @@ const EventList = (props) => {
 
   const getAllEvents = async () => {
     try {
-      let response = await axios.get('http://127.0.0.1:5000/api/events', {
+      let response = await axios.get(`${props.BASE_URL}/api/events`, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -45,7 +45,7 @@ const EventList = (props) => {
 
   const postEnrollment = async (event_id) => {
     try {
-      await axios.post(`http://127.0.0.1:5000/api/events/enroll/${event_id}`, null, {
+      await axios.post(`${props.BASE_URL}/api/events/enroll/${event_id}`, null, {
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -85,7 +85,7 @@ const EventList = (props) => {
         if (confirmed) {
           try {
             const response = await axios.post(
-              `http://127.0.0.1:5000/api/student/check-in`,
+              `${props.BASE_URL}/api/student/check-in`,
               {
                 event_id: event.id,
                 pin: pin,
@@ -167,7 +167,7 @@ const EventList = (props) => {
           })}
         </tbody>
       </table>
-      {student?.is_coach && <EditEvent token={token} {...event} />}
+      {student?.is_coach && <EditEvent BASE_URL={props.BASE_URL} token={token} {...event} />}
     </div>
   );
 };
