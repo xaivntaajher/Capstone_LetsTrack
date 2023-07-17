@@ -4,12 +4,7 @@ import datetime
 
 db = SQLAlchemy()
 
-# promotion = db.Table('promotion',
-#     db.Column('date', db.Date, default=datetime.datetime.now),
-#     db.Column('rank_id', db.Integer, db.ForeignKey('rank.id'), primary_key=True),                     
-#     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),                     
-#     # db.Column('coach_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)                     
-# )
+
 
 user_event = db.Table('user_event',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True), 
@@ -62,13 +57,6 @@ class Event(db.Model):
     type = db.Column(db.String(255), nullable=False)
     date = db.Column(db.Date)
     capacity = db.Column(db.Integer)
-
-# class UserEvent(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     user = db.relationship("User")
-#     event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-#     event = db.relationship("Event")
 
 class Rank(db.Model):
     id = db.Column(db.Integer, primary_key=True)

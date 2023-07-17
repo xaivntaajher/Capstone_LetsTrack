@@ -1,6 +1,6 @@
 version: '3.4'
 services:
-  letstrack-database:
+  db:
     # build: ./database
     image: xaivntaaj/letstrack-database:1.0
     ports:
@@ -11,25 +11,23 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
-  letstrack-backend:
-    build: ./backend
+  api:
+    # build: ./backend
     image: xaivntaaj/letstrack-backend:1.0
     ports:
       - 8000:8000
     restart: always
     depends_on:
-      - "letstrack-database"
+      - "db"
     command: >
       sh -c "flask db upgrade && gunicorn -b 0.0.0.0 app:app"
 
-  letstrack-frontend:
+  frontend:
     # build: ./frontend
     image: xaivntaaj/letstrack-frontend:1.0
     ports:
-      - 3000:3000
       - 80:80
-      - 443-443
     depends_on:
-      - "letstrack-backend"
+      - "api"
 volumes:
   db-data:
