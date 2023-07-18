@@ -1,0 +1,26 @@
+.container-eventlist {
+    background-image: url("../../images/jonathan-borba-jWYbjMfDvrI-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.text-std-list {
+    font-size: 40px;
+    color: yellow;
+    -webkit-text-stroke: 0.5px black;
+    font-family: 'Your Custom Font', Impact, fantasy;
+ } 
+
+.event {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+

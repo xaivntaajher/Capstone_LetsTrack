@@ -1,0 +1,33 @@
+version: '3.4'
+services:
+  db:
+    # build: ./database
+    image: xaivntaaj/letstrack-database:1.0
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+
+  api:
+    # build: ./backend
+    image: xaivntaaj/letstrack-backend:1.0
+    ports:
+      - 8000:8000
+    restart: always
+    depends_on:
+      - "db"
+    command: >
+      sh -c "flask db upgrade && gunicorn -b 0.0.0.0 app:app"
+
+  frontend:
+    # build: ./frontend
+    image: xaivntaaj/letstrack-frontend:1.0
+    ports:
+      - 80:80
+    depends_on:
+      - "api"
+volumes:
+  db-data:

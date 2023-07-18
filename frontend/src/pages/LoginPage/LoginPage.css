@@ -1,0 +1,37 @@
+.error {
+  color: red;
+}
+
+.container-1 {
+  background-image: url("../../images/timothy-eberly-7MRajrPiTqw-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  color:azure
+}
+
+.register-container {
+  background-color: white;
+  padding: 5px;
+}
+
+.register-link {
+  cursor: pointer;
+  font-size: 12px;
+  color: white;
+  font-family: 'Your Custom Font', Impact, fantasy;
+  font-size: 20px;
+}
+
+.login-button {
+  background-color: gray;
+  color: white;
+  font-family: 'Your Custom Font', Impact, fantasy;
+}

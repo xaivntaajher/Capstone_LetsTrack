@@ -1,0 +1,36 @@
+ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+li {
+  font-size: 1.25rem;
+}
+
+.navBar {
+  background: rgb(223, 64, 64);
+  box-shadow: 4px 2px 5px gray;
+  color: white;
+  padding: 1.5rem 2rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.navBar button {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 0.4rem 0.5rem;
+}
+
+.navBar button:hover {
+  background: white;
+  color: gray;
+  cursor: pointer;
+}
+
+.brand {
+  cursor: pointer;
+  font-size: 2rem;
+}
+
