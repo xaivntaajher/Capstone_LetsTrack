@@ -20,7 +20,7 @@ const EventDetailPage = (props) => {
   const fetchEventDetails = async () => {
     try {
       const response = await axios.get(
-        `http://3.134.97.22:8000/api/event_info/${event_id}`,
+        `http://127.0.0.1:5000/api/event_info/${event_id}`,
         {
           headers: {
             Authorization: "Bearer " + token,
